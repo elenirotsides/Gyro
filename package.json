@@ -4,6 +4,7 @@
   "description": "CS546 Final Project",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,9 +12,17 @@
     "url": "git+https://github.com/elenirotsides/Gyro.git"
   },
   "author": "Eleni Rotsides, Cassidy Bickler, Wes LaFerriere, Will DeRoberts",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/elenirotsides/Gyro/issues"
   },
-  "homepage": "https://github.com/elenirotsides/Gyro#readme"
+  "homepage": "https://github.com/elenirotsides/Gyro#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.0.0",
+    "express-session": "^1.17.1",
+    "mongodb": "^3.6.0"
+  }
 }
