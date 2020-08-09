@@ -1,0 +1,16 @@
+<h1 class="index-header">
+    Check your authentication!
+</h1>
+
+{{#if hasErrors}}
+<p class="error-list">{{error}}
+</p>
+{{/if}}
+
+<form action="/login" method="POST" id="login-form">
+    <label>Please enter your username and password </label>
+    <input type="text" name="username" id="username" />
+    <input type="password" name="password" id="password" />
+
+    <input type="submit" value="Submit">
+</form>
