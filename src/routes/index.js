@@ -1,13 +1,22 @@
 const loginRoutes = require("./login");
+const session = require("express-session");
 
 const constructorMethod = (app) => {
-  //app.use("/login", loginRoutes);
+  app.use("/login", loginRoutes);
+
+  //set express-session cookie
+  app.use(
+    session({
+      name: "AuthCookie",
+      secret: "some secret string!",
+      resave: false,
+      saveUninitialized: true,
+    })
+  );
 
   app.get("/", (req, res) => {
-    //res.render("login/index", {
-    res.render("../src/views/login/index", {
-      title: "Please signin",
-    });
+    //check for session info
+    res.redirect("/login");
   });
 
   app.use("*", (req, res) => {
