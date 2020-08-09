@@ -29,7 +29,7 @@ const addUser = async (firstName, lastName, email, plaintextPassword) => {
     return await getUser(String(id));
 }
 
-const getUser = async(id) => {
+const getUser = async (id) => {
     verify.str(id);
 
     let collection = await users();
@@ -46,4 +46,15 @@ const getUser = async(id) => {
     return objWithFunction;
 }
 
-module.exports = { addUser, getUser };
+const getUserByEmail = async (email) => {
+    verify.str(email);
+
+    let collection = await users();
+
+    let obj = await collection.findOne({email: email});
+    if(obj === null) throw new Error("No user found with email " + email);
+
+    return getUser(String(obj._id));
+}
+
+module.exports = { addUser, getUser, getUserByEmail };

@@ -13,6 +13,9 @@ const main = async () => {
     let result = userWes.checkPassword(pass);
     console.log(userWes);
 
+    userWes = await users.getUserByEmail("wes.laf@email.com");
+    console.log(userWes);
+
     let newTask = await tasks.addTask("Add actual functionality", String(userWes._id), 0, ['boring', 'notgonnadoit']);
     console.log(newTask);
     newTask = await tasks.setTaskName(String(newTask._id), "new name");
