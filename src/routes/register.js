@@ -5,7 +5,7 @@ router.get("/", async (req, res) => {
   res.render("../src/views/login/register");
 });
 
-router.put("/", async (req, res) => {
+router.post("/", async (req, res) => {
   //TODO:
   //error handling
   //add user to users table
