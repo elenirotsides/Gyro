@@ -1,7 +1,3 @@
-<h1 class="index-header">
-    Check your authentication!
-</h1>
-
 {{#if hasErrors}}
 <p class="error-list">{{error}}
 </p>
@@ -13,4 +9,8 @@
     <input type="password" name="password" id="password" />
 
     <input type="submit" value="Submit">
+</form>
+
+<form action="/register" method="GET" id="register_here">
+    <input type="submit" value="Register Here">
 </form>

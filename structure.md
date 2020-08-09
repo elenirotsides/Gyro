@@ -2,6 +2,7 @@
 
 /login
 /register
+/logout
 
 /board (the board)
 

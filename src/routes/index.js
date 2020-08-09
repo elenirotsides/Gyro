@@ -1,8 +1,12 @@
 const loginRoutes = require("./login");
+const boardRoutes = require("./board");
+const registerRoutes = require("./register");
 const session = require("express-session");
 
 const constructorMethod = (app) => {
   app.use("/login", loginRoutes);
+  app.use("/board", boardRoutes);
+  app.use("/register", registerRoutes);
 
   //set express-session cookie
   app.use(
@@ -15,8 +19,11 @@ const constructorMethod = (app) => {
   );
 
   app.get("/", (req, res) => {
-    //check for session info
-    res.redirect("/login");
+    if (!req.session.user) {
+      res.redirect("/login");
+    } else {
+      res.redirect("/board");
+    }
   });
 
   app.use("*", (req, res) => {

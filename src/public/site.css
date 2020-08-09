@@ -17,3 +17,8 @@ img {
   width: 5%;
   height: auto;
 }
+
+#registration_form {
+  display: block;
+  width: 150px;
+}
