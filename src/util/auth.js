@@ -5,13 +5,13 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const genHash = (pass) => {
-    let salt = bcrypt.genSaltSync(saltRounds);
-    return bcrypt.hashSync(pass, salt);
+	let salt = bcrypt.genSaltSync(saltRounds);
+	return bcrypt.hashSync(pass, salt);
 };
 
 const check = (pass, hash) => {
-    let result = bcrypt.compareSync(pass, hash);
-    return result;
+	let result = bcrypt.compareSync(pass, hash);
+	return result;
 };
 
 module.exports = { genHash, check };

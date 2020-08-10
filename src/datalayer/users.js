@@ -4,57 +4,57 @@ const verify = require('../util/verify');
 const auth = require('../util/auth');
 
 const addUser = async (firstName, lastName, email, plaintextPassword) => {
-    verify.str(firstName);
-    verify.str(lastName);
-    verify.str(email);
-    verify.str(plaintextPassword);
+	verify.str(firstName);
+	verify.str(lastName);
+	verify.str(email);
+	verify.str(plaintextPassword);
 
-    let hashedPassword = auth.genHash(plaintextPassword);
-    
-    let collection = await users();
+	let hashedPassword = auth.genHash(plaintextPassword);
 
-    let insertInfo = await collection.insertOne({
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        hashedPassword: hashedPassword,
-        isAdmin: false,
-        tasksCreated: []
-    });
+	let collection = await users();
 
-    let id = insertInfo.insertedId;
+	let insertInfo = await collection.insertOne({
+		firstName: firstName,
+		lastName: lastName,
+		email: email,
+		hashedPassword: hashedPassword,
+		isAdmin: false,
+		tasksCreated: []
+	});
 
-    if(id === 0) throw new Error("Insertion error!");
+	let id = insertInfo.insertedId;
 
-    return await getUser(String(id));
-}
+	if (id === 0) throw new Error('Insertion error!');
+
+	return await getUser(String(id));
+};
 
 const getUser = async (id) => {
-    verify.str(id);
+	verify.str(id);
 
-    let collection = await users();
+	let collection = await users();
 
-    let obj = await collection.findOne({_id: ObjectID(id)});
-    if(obj === null) throw new Error("No user found with ID " + id);
+	let obj = await collection.findOne({ _id: ObjectID(id) });
+	if (obj === null) throw new Error('No user found with ID ' + id);
 
-    // inject a checkPassword function into user objects
-    let objWithFunction = {
-        ...obj,
-        checkPassword: pass => auth.check(pass, obj.hashedPassword)
-    }
+	// inject a checkPassword function into user objects
+	let objWithFunction = {
+		...obj,
+		checkPassword: (pass) => auth.check(pass, obj.hashedPassword)
+	};
 
-    return objWithFunction;
-}
+	return objWithFunction;
+};
 
 const getUserByEmail = async (email) => {
-    verify.str(email);
+	verify.str(email);
 
-    let collection = await users();
+	let collection = await users();
 
-    let obj = await collection.findOne({email: email});
-    if(obj === null) throw new Error("No user found with email " + email);
+	let obj = await collection.findOne({ email: email });
+	if (obj === null) throw new Error('No user found with email ' + email);
 
-    return getUser(String(obj._id));
-}
+	return getUser(String(obj._id));
+};
 
 module.exports = { addUser, getUser, getUserByEmail };
