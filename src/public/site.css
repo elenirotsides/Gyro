@@ -1,0 +1,24 @@
+html,
+body {
+  font-size: 16pt;
+}
+
+.header.content > img,
+.header.content > span {
+  display: inline-block;
+}
+
+.header_text {
+  vertical-align: top;
+  font-size: 50pt;
+}
+
+img {
+  width: 5%;
+  height: auto;
+}
+
+#registration_form {
+  display: block;
+  width: 150px;
+}

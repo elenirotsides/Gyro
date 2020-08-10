@@ -1,0 +1,18 @@
+{{#if hasErrors}}
+<p class="error-list">{{error}}
+</p>
+{{/if}}
+
+<H1>Register Here</H1>
+<form action="/register" method="POST" id="registration_form">
+    <label>First Name</label>
+    <input type="text" name="firstName" id="firstName" />
+    <label>Last Name</label>
+    <input type="text" name="lastName" id="lastName" />
+    <label>Email Address</label>
+    <input type="email" name="email" id="email" />
+    <label>Password</label>
+    <input type="password" name="password" id="password" />
+
+    <input type="submit" value="Submit">
+</form>
