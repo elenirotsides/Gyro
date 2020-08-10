@@ -8,7 +8,8 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/create', async (req, res) => {
-	//TODO implement
+	console.log('Here');
+	res.render(res.render('../src/views/board/add_task'));
 });
 
 router.get('/:id/edit', async (req, res) => {
