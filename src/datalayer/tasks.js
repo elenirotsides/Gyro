@@ -40,6 +40,14 @@ const getTask = async (id) => {
 	return obj;
 };
 
+const getAllTasks = async () => {
+	const collection = await tasks();
+
+	const taskList = await collection.find({}).toArray();
+
+	return taskList;
+};
+
 const setTaskTags = async (id, tags) => {
 	verify.nonzeroArr(tags);
 	await _updateTask(id, { tags: tags });
@@ -93,6 +101,7 @@ const _updateTask = async (id, changes) => {
 module.exports = {
 	addTask,
 	getTask,
+	getAllTasks,
 	setTaskName,
 	setTaskTags,
 	setTaskStatus,

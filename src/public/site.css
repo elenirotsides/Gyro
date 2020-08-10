@@ -1,24 +1,43 @@
 html,
 body {
-  font-size: 16pt;
+	font-size: 16pt;
 }
 
 .header.content > img,
 .header.content > span {
-  display: inline-block;
+	display: inline-block;
 }
 
 .header_text {
-  vertical-align: top;
-  font-size: 50pt;
+	vertical-align: top;
+	font-size: 50pt;
 }
 
 img {
-  width: 5%;
-  height: auto;
+	width: 5%;
+	height: auto;
 }
 
 #registration_form {
-  display: block;
-  width: 150px;
+	display: block;
+	width: 150px;
+}
+
+.kanban_board {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-gap: 1rem;
+}
+.kanban_board > div {
+	background: #ede7f6;
+	padding: 1.5rem;
+	border-radius: 1rem;
+}
+
+.task {
+	width: auto;
+	display: grid;
+	background: pink;
+	grid-template-rows: repeat(auto-fill);
+	grid-gap: 1rem;
 }

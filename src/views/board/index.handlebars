@@ -1,0 +1,24 @@
+<div class="kanban_board">
+    <div class="pending"> Pending
+        {{#each pending_tasks}}
+        <li>{{taskName}}</li>
+        {{/each}}
+    </div>
+    <div class="in_progress"> In Progress
+        {{#each in_progress_tasks}}
+        <div class="task">{{taskName}}
+            {{createdBy}}
+            {{tags}}</div>
+        {{/each}}
+    </div>
+    <div class="review"> Review
+        {{#each review_tasks}}
+        <li>{{taskName}}</li>
+        {{/each}}
+    </div>
+    <div class="done"> Done
+        {{#each done_tasks}}
+        <li>{{taskName}}</li>
+        {{/each}}
+    </div>
+</div>
