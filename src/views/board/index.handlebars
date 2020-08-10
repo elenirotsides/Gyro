@@ -2,23 +2,38 @@
     <div class="pending"> Pending
         {{#each pending_tasks}}
         <li>{{taskName}}</li>
+        <form action=`/tasks/{_id}/edit` method="GET" id="edit_task">
+            <input type="submit" value="Edit">
+        </form>
         {{/each}}
     </div>
     <div class="in_progress"> In Progress
         {{#each in_progress_tasks}}
         <div class="task">{{taskName}}
             {{createdBy}}
-            {{tags}}</div>
+            {{tags}}
+            <form action=`/tasks/{_id}/edit` method="GET" id="edit_task">
+                <input type="submit" value="Edit">
+            </form>
+        </div>
         {{/each}}
     </div>
     <div class="review"> Review
         {{#each review_tasks}}
-        <li>{{taskName}}</li>
+        <li>{{taskName}}
+            <form action=`/tasks/{_id}/edit` method="GET" id="edit_task">
+                <input type="submit" value="Edit">
+            </form>
+        </li>
         {{/each}}
     </div>
     <div class="done"> Done
         {{#each done_tasks}}
-        <li>{{taskName}}</li>
+        <li>{{taskName}}
+            <form action=`/tasks/{_id}/edit` method="GET" id="edit_task">
+                <input type="submit" value="Edit">
+            </form>
+        </li>
         {{/each}}
     </div>
 </div>
