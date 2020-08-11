@@ -3,6 +3,7 @@
 </p>
 {{/if}}
 
+{{#if newTask}}
 <H1>Create a new Task</H1>
 <form action="/tasks/create" method="POST" id="add_task_form">
     <label>Task Name</label>
@@ -14,3 +15,4 @@
 
     <input type="submit" value="Submit">
 </form>
+{{/if}}

@@ -3,7 +3,7 @@
         <H2 class="title">Pending</H2>
         {{#each pending_tasks}}
         <li>{{taskName}}</li>
-        <form action=`/tasks/{_id}/edit` method="GET" id="edit_task">
+        <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
             <input type="submit" value="Edit">
         </form>
         {{/each}}
@@ -14,7 +14,7 @@
         <div class="task">{{taskName}}
             {{createdBy}}
             {{tags}}
-            <form action=`/tasks/{_id}/edit` method="GET" id="edit_task">
+            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
                 <input type="submit" value="Edit">
             </form>
         </div>
@@ -24,7 +24,7 @@
         <H2 class="title">Review</H2>
         {{#each review_tasks}}
         <li>{{taskName}}
-            <form action=`/tasks/{_id}/edit` method="GET" id="edit_task">
+            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
                 <input type="submit" value="Edit">
             </form>
         </li>
@@ -34,7 +34,7 @@
         <H2 class="title">Done</H2>
         {{#each done_tasks}}
         <li>{{taskName}}
-            <form action=`/tasks/{_id}/edit` method="GET" id="edit_task">
+            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
                 <input type="submit" value="Edit">
             </form>
         </li>

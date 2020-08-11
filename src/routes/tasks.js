@@ -2,19 +2,26 @@ const express = require('express');
 const router = express.Router();
 const xss = require('xss');
 const tasks = require('../datalayer/tasks');
-
-router.get('/', async (req, res) => {
-	//TODO implement
-});
+var ObjectID = require('mongodb').ObjectID;
 
 router.get('/create', async (req, res) => {
-	res.render(res.render('../src/views/board/add_task'));
+	res.render(res.render('../src/views/board/add_task', { newTask: true }));
 });
 
 router.get('/:id/edit', async (req, res) => {
-	console.log('hello there');
-	res.response(req);
-	//TODO implement
+	console.log(ObjectID(req.params.id));
+	try {
+		const task_to_edit = await tasks.getTask(ObjectID(req.params.id));
+
+		res.render(
+			res.render('../src/views/board/add_task', {
+				editTask: true,
+				task_name: task_to_edit.taskName
+			})
+		);
+	} catch (e) {
+		res.status(404).json({ message: 'task not found' });
+	}
 });
 
 router.get('/:id/comments', async (req, res) => {
