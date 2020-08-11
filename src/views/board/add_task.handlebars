@@ -5,14 +5,19 @@
 
 {{#if newTask}}
 <H1>Create a new Task</H1>
+{{else}}
+<H1>Edit a Task</H1>
+{{/if}}
+
 <form action="/tasks/create" method="POST" id="add_task_form">
     <label>Task Name</label>
-    <input type="text" name="taskName" id="taskName" />
+    <input type="text" name="taskName" id="taskName" value={{task_name}} />
     <label>Tags</label>
-    <input type="text" name="tags" id="tags" />
+    <input type="text" name="tags" id="tags" value={{tags}} />
+    {{#if newTask}}
     <label>Comments</label>
-    <input type="text" name="comments" id="comments" />
+    <input type="text" name="comments" id="comments" value={{comments}} />
+    {{/if}}
 
     <input type="submit" value="Submit">
 </form>
-{{/if}}
