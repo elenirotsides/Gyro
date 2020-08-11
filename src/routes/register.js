@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-	input = xss(req.body);
+	input = req.body;
 
 	//add user to users table
 	//log user in

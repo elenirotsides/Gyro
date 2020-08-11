@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
 	let user;
 
 	try {
-		user = await users.getUserByEmail(xss(input['email']));
+		user = await users.getUserByEmail(xss(input['email'].toLowerCase()));
 	} catch (e) {
 		return res.render('../src/views/login/index', {
 			hasErrors: true,
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
 		});
 	}
 
-	if (xss(input['email']) === user.email) {
+	if (xss(input['email'].toLowerCase()) === user.email) {
 		let correctPassword = false;
 
 		try {
