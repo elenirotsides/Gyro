@@ -1,5 +1,6 @@
 <div class="kanban_board">
-    <div class="pending"> Pending
+    <div class="pending">
+        <H2 class="title">Pending</H2>
         {{#each pending_tasks}}
         <li>{{taskName}}</li>
         <form action=`/tasks/{_id}/edit` method="GET" id="edit_task">
@@ -7,7 +8,8 @@
         </form>
         {{/each}}
     </div>
-    <div class="in_progress"> In Progress
+    <div class="in_progress">
+        <H2 class="title">In Progress</H2>
         {{#each in_progress_tasks}}
         <div class="task">{{taskName}}
             {{createdBy}}
@@ -18,7 +20,8 @@
         </div>
         {{/each}}
     </div>
-    <div class="review"> Review
+    <div class="review">
+        <H2 class="title">Review</H2>
         {{#each review_tasks}}
         <li>{{taskName}}
             <form action=`/tasks/{_id}/edit` method="GET" id="edit_task">
@@ -27,7 +30,8 @@
         </li>
         {{/each}}
     </div>
-    <div class="done"> Done
+    <div class="done">
+        <H2 class="title">Done</H2>
         {{#each done_tasks}}
         <li>{{taskName}}
             <form action=`/tasks/{_id}/edit` method="GET" id="edit_task">

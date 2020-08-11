@@ -25,19 +25,30 @@ img {
 
 .kanban_board {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 	grid-gap: 1rem;
 }
+
 .kanban_board > div {
-	background: #ede7f6;
 	padding: 1.5rem;
+	border: black;
+	border-style: solid;
 	border-radius: 1rem;
+	text-align: center;
+}
+
+.title {
+	vertical-align: top;
+	text-decoration: underline;
 }
 
 .task {
 	width: auto;
-	display: grid;
-	background: pink;
+	text-align: left;
+	border-style: solid;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	background-color: lightcyan;
 	grid-template-rows: repeat(auto-fill);
 	grid-gap: 1rem;
 }
