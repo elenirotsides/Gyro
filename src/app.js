@@ -27,7 +27,7 @@ app.use(
 
 /*
 middlware function for rerouting to the login page if user isn't logged in
-*/
+
 app.use(async (req, res, next) => {
 	if (!req.session.user) {
 		return res
@@ -37,7 +37,7 @@ app.use(async (req, res, next) => {
 		next();
 	}
 });
-
+*/
 configRoutes(app);
 
 app.listen(3000, () => {
