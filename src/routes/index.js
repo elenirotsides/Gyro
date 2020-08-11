@@ -12,27 +12,14 @@ const constructorMethod = (app) => {
 	app.use('/board', boardRoutes);
 	app.use('/register', registerRoutes);
 	app.use('/tasks', tasksRoutes);
-
-	//set express-session cookie
-
-	/* See my note above about middleware
-  app.use(
-    session({
-      name: "AuthCookie",
-      secret: "some secret string!",
-      resave: false,
-      saveUninitialized: true,
-    })
-  );
-  */
-
+	/*
 	app.get('/', (req, res) => {
 		if (!req.session.user) {
 			res.redirect('/login');
 		} else {
 			res.redirect('/board');
 		}
-	});
+	}); */
 
 	app.get('/logout', async (req, res) => {
 		req.session.destroy();
@@ -44,9 +31,7 @@ const constructorMethod = (app) => {
 	});
 
 	app.use('*', (req, res) => {
-		res.sendStatus(404);
-		//I think we should redirect the user to the login page or the board here instead of just a 404,
-		//let's discuss on Wednesday ~Eleni
+		res.redirect('/login');
 	});
 };
 
