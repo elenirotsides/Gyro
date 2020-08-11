@@ -9,9 +9,8 @@ router.get('/create', async (req, res) => {
 });
 
 router.get('/:id/edit', async (req, res) => {
-	console.log(ObjectID(req.params.id));
 	try {
-		const task_to_edit = await tasks.getTask(ObjectID(req.params.id));
+		const task_to_edit = await tasks.getTask(req.params.id);
 
 		res.render(
 			res.render('../src/views/board/add_task', {
@@ -20,7 +19,7 @@ router.get('/:id/edit', async (req, res) => {
 			})
 		);
 	} catch (e) {
-		res.status(404).json({ message: 'task not found' });
+		res.status(404).json({ message: `task ${req.params.id} not found` });
 	}
 });
 

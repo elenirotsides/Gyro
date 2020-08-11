@@ -34,7 +34,7 @@ const getTask = async (id) => {
 
 	let collection = await tasks();
 
-	let obj = await collection.findOne({ _id: ObjectID(id) });
+	let obj = await collection.findOne({ _id: id });
 	if (obj === null) throw new Error('No task found with ID ' + id);
 
 	return obj;
