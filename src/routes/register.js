@@ -14,8 +14,6 @@ router.post('/', async (req, res) => {
 	//route to kanban board
 
 	//NOTE: for now, I'm sending jsons, but I will edit this later so it injects error into a handlebar file or something
-	//Whoever is doing the html should make the fields 'required' in the form using the required keyword so the browser
-	//forces the user to write stuff in the mandatory fields, the error handling below would be an added precaution
 	if (!input['firstName']) {
 		res.status(400).json({ error: 'You must provide a first name' });
 	}

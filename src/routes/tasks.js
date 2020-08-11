@@ -29,8 +29,6 @@ router.post('/create', async (req, res) => {
 	input = xss(req.body);
 
 	//NOTE: for now, I'm sending jsons, but I will edit this later so it injects error into a handlebar file or something
-	//Whoever is doing the html should make the fields 'required' in the form using the required keyword so the browser
-	//forces the user to write stuff in the mandatory fields, the error handling below would be an added precaution
 	if (!input['taskName']) {
 		res.status(400).json({ error: 'You must name the task' });
 	}
@@ -43,7 +41,7 @@ router.post('/create', async (req, res) => {
 	if (!input['tags']) {
 		res.status(400).json({ error: 'There must be a tag' }); //are tags required?
 	}
-
+	//req.session.user should be firstName + LastName? Or all the user data?
 	try {
 		await tasks.addTask(
 			input['taskName'],
