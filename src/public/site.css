@@ -13,6 +13,12 @@ body {
 	font-size: 50pt;
 }
 
+#logout_button {
+	display: inline-block;
+	vertical-align: top;
+	padding-left: 80%;
+}
+
 img {
 	width: 5%;
 	height: auto;

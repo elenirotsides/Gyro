@@ -23,11 +23,7 @@ const constructorMethod = (app) => {
 
 	app.get('/logout', async (req, res) => {
 		req.session.destroy();
-		//TODO:
-		//Render logout successful notification
-		//Redirct to login page
-
-		return;
+		res.redirect('/login');
 	});
 
 	app.use('*', (req, res) => {
