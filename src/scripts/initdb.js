@@ -39,6 +39,10 @@ const main = async () => {
 
 	console.log(newTask);
 
+	console.log(await tasks.getTasksByTag('te'));
+	console.log(await tasks.getTaskByName('Add actual'));
+	console.log(await tasks.getTaskByName('not in anything'));
+
 	console.log('Database initialized.');
 	await db.serverConfig.close();
 };
