@@ -1,47 +1,77 @@
-<div class="kanban_board">
-    <div class="pending">
-        <H2 class="title">Pending</H2>
-        {{#each pending_tasks}}
-        <li>{{taskName}}</li>
-        <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
-            <input type="submit" value="Edit">
-        </form>
-        {{/each}}
-    </div>
-    <div class="in_progress">
-        <H2 class="title">In Progress</H2>
-        {{#each in_progress_tasks}}
-        <div class="task">{{taskName}}
-            {{createdBy}}
-            {{tags}}
-            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
-                <input type="submit" value="Edit">
-            </form>
-        </div>
-        {{/each}}
-    </div>
-    <div class="review">
-        <H2 class="title">Review</H2>
-        {{#each review_tasks}}
-        <li>{{taskName}}
-            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
-                <input type="submit" value="Edit">
-            </form>
-        </li>
-        {{/each}}
-    </div>
-    <div class="done">
-        <H2 class="title">Done</H2>
-        {{#each done_tasks}}
-        <li>{{taskName}}
-            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
-                <input type="submit" value="Edit">
-            </form>
-        </li>
-        {{/each}}
-    </div>
-</div>
+<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script>
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
 
+    function drag(ev) {
+        ev.dataTransfer.setData('text', ev.target.id);
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData('text');
+        console.log(data);
+        console.log(ev.dataTransfer);
+        console.log(ev.target.id)
+        ev.target.appendChild(document.getElementById(data));
+
+        var output = {};
+        output.ticketId = data;
+        output.ticketStatus = ev.target.id;
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(output),
+            contentType: 'application/json',
+            url: 'http://localhost:3000/endpoint',
+            success: function (output) {
+                console.log('success');
+                console.log(JSON.stringify(output));
+            }
+        }
+    }
+</script>
+
+<body>
+    <div class="row">
+        <div class="column">
+            <H2 class="title">Pending</H2>
+
+            <div class="div" id="pending" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+        <div class="column">
+            <H2 class="title">In Progress</H2>
+            <div class="div" id='in_progress' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+
+        <div class="column">
+            <H2 class="title">Review</H2>
+            <div class="div" id="review" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+        <div class="column">
+            <H2 class="title">Done</H2>
+            <div class="div" id="done" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+    </div>
+    <!--test tickets!-->
+    <div class="tickets" id="drag1" draggable="true" ondragstart="drag(event)" width="336" height="69">
+        <p>Ticket</p>
+        <ol>
+            <li>this</li>
+            <li>is a</li>
+            <li>ticket</li>
+        </ol>
+    </div>
+    <div class="tickets" id="drag2" draggable="true" ondragstart="drag(event)" width="336" height="69">
+        <p>Ticket</p>
+        <ol>
+            <li>this</li>
+            <li>is a</li>
+            <li>ticket</li>
+        </ol>
+    </div>
+</body>
 <form action="/tasks/create" method="GET" id="add_task">
     <input type="submit" value="Add a Task">
 </form>
