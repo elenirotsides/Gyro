@@ -4,10 +4,23 @@ const session = require('express-session');
 const static = express.static(__dirname + '/public');
 const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
+const xss = require('xss');
+
+/* Apply XSS protection to every element of the req.body */
+const xssProtectionMiddleware = (req, res, next) => {
+	let keys = Object.keys(req.body);
+	keys.forEach((key) => {
+		// Uncomment to show each translation that occurs, per request
+		// console.log(key + ': ' + req.body[key] + ' => ' + xss(req.body[key]));
+		req.body[key] = xss(req.body[key]);
+	});
+	next();
+};
 
 app.use('/public', static);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(xssProtectionMiddleware);
 
 app.engine(
 	'handlebars',

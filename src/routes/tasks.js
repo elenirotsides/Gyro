@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const xss = require('xss');
 const tasks = require('../datalayer/tasks');
 var ObjectID = require('mongodb').ObjectID;
 
@@ -38,7 +37,7 @@ router.get('/:id/comments', async (req, res) => {
 });
 
 router.post('/create', async (req, res) => {
-	input = xss(req.body);
+	input = req.body;
 
 	//NOTE: for now, I'm sending jsons, but I will edit this later so it injects error into a handlebar file or something
 	if (!input['taskName']) {
@@ -85,7 +84,7 @@ router.post('/:id/drag', async (req, res) => {
 });
 
 router.post('/:id/comments/create', async (req, res) => {
-	input = xss(req.body);
+	input = req.body;
 
 	if (!input['comment']) {
 		res.status(400).json({
