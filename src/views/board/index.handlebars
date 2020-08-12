@@ -45,6 +45,9 @@
             <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
                 <input type="submit" value="Edit">
             </form>
+            <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
+                <input type="submit" value="View Comments">
+            </form>
         </div>
         {{/each}}
 
@@ -53,12 +56,15 @@
     <div class="column">
         <H2 class="title">In Progress</H2>
         {{#each in_progress_tasks}}
-        <div class="tickets" id="drag2" draggable="true" ondragstart="drag(event)" width="336" height="69">
+        <div class="tickets" id="drag" draggable="true" ondragstart="drag(event)" width="336" height="69">
             {{taskName}}
             {{createdBy}}
             {{tags}}
             <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
                 <input type="submit" value="Edit">
+            </form>
+            <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
+                <input type="submit" value="View Comments">
             </form>
         </div>
         {{/each}}
@@ -75,6 +81,9 @@
             <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
                 <input type="submit" value="Edit">
             </form>
+            <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
+                <input type="submit" value="View Comments">
+            </form>
         </div>
         {{/each}}
         <div class="div" id="review" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
@@ -88,6 +97,9 @@
             {{tags}}
             <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
                 <input type="submit" value="Edit">
+            </form>
+            <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
+                <input type="submit" value="View Comments">
             </form>
         </div>
         {{/each}}

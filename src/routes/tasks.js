@@ -23,7 +23,17 @@ router.get('/:id/edit', async (req, res) => {
 });
 
 router.get('/:id/comments', async (req, res) => {
-	//TODO implement
+	try {
+		const task_to_view = await tasks.getTask(req.params.id);
+
+		res.render('../src/views/board/add_task', {
+			newTask: false,
+			editTask: false,
+			comments: task_to_view.comments
+		});
+	} catch (e) {
+		res.status(404).json({ message: `task ${req.params.id} not found` });
+	}
 });
 
 router.get('/:id/comments/create', async (req, res) => {
