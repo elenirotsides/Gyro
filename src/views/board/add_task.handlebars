@@ -26,30 +26,7 @@
     {{#if newTask}}
     <label>Comments</label>
     <input type="text" name="comments" id="comments" value={{comments}} />
-    <input type="submit" value="Submit">
-</form>
-{{else if editTask}}
-<H1>Edit a Task</H1>
-<form action="/tasks/create" method="POST" id="add_task_form">
-    <label>Task Name</label>
-    <input type="text" name="taskName" id="taskName" value={{task_name}} />
-    </br>
-    <label>Tags</label>
-    <div>
-        <input type="checkbox" id="h_priority" name="tag1" value="h_priority">
-        <label for="h_priority"> High Priority</label><br>
-        <input type="checkbox" id="l_priority" name="tag2" value="l_priority">
-        <label for="l_priority"> Low Priority</label><br>
-        <input type="checkbox" id="sample" name="tag3" value="sample">
-        <label for="sample"> Sample</label>
-    </div>
-    </select>
-    <input type="submit" value="Submit">
-</form>
-{{/if}}
+    {{/if}}
 
-<ul>
-    {{#each comments}}
-    <li>{{comment}} [by {{name}}]</li>
-    {{/each}}
-</ul>
+    <input type="submit" value="Submit">
+</form>
