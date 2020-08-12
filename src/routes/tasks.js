@@ -14,6 +14,7 @@ router.get('/:id/edit', async (req, res) => {
 
 		res.render('../src/views/board/add_task', {
 			newTask: false,
+			editTask: true,
 			task_name: task_to_edit.taskName,
 			tags: task_to_edit.tags
 		});
@@ -23,11 +24,17 @@ router.get('/:id/edit', async (req, res) => {
 });
 
 router.get('/:id/comments', async (req, res) => {
-	//TODO implement
-});
+	try {
+		const task_to_view = await tasks.getTask(req.params.id);
 
-router.get('/:id/comments/create', async (req, res) => {
-	//TODO implement
+		res.render('../src/views/board/add_task', {
+			newTask: false,
+			editTask: false,
+			comments: task_to_view.comments
+		});
+	} catch (e) {
+		res.status(404).json({ message: `task ${req.params.id} not found` });
+	}
 });
 
 router.post('/create', async (req, res) => {

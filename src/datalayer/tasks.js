@@ -40,6 +40,45 @@ const getTask = async (id) => {
 	return obj;
 };
 
+const getTasksByTag = async (tag) => {
+	verify.str(tag);
+
+	let collection = await tasks();
+
+	let objs = await collection
+		.aggregate([
+			// an array of all tasks
+			{ $project: { tags: 1 } },
+			// {_id: XXX, tags: ["tag1", "tag2"]}
+			{ $unwind: '$tags' },
+			// {_id: XXX, tags: "tag1"}, {_id: XXX, tags: "tag2"}
+			{ $match: { tags: { $regex: '^' + tag } } }
+			// set is now filtered for matching tags
+		])
+		.toArray();
+	let matchingIDs = objs.map((match) => String(match._id));
+	matchingIDs = matchingIDs.filter((v, i, s) => s.indexOf(v) === i); // unique filter
+	let matchingObjs = await Promise.all(
+		matchingIDs.map(async (id) => await getTask(id))
+	);
+
+	return matchingObjs;
+};
+
+const getTaskByName = async (name) => {
+	verify.str(name);
+
+	let collection = await tasks();
+
+	let obj = await collection.findOne({
+		taskName: { $regex: '^' + name }
+	});
+	if (obj === null)
+		throw new Error('No task found with similar name to "' + name + '"');
+
+	return obj;
+};
+
 const getAllTasks = async () => {
 	const collection = await tasks();
 
@@ -101,6 +140,8 @@ const _updateTask = async (id, changes) => {
 module.exports = {
 	addTask,
 	getTask,
+	getTaskByName,
+	getTasksByTag,
 	getAllTasks,
 	setTaskName,
 	setTaskTags,

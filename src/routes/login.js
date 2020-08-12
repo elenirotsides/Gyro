@@ -5,7 +5,8 @@ const connection = require('../datalayer/mongoConnection');
 
 router.get('/', async (req, res) => {
 	res.render('../src/views/login/index', {
-		title: 'Please signin'
+		title: 'Please signin',
+		hideLogout: true
 	});
 });
 
@@ -19,6 +20,7 @@ router.post('/', async (req, res) => {
 	} catch (e) {
 		return res.render('../src/views/login/index', {
 			hasErrors: true,
+			hideLogout: true,
 			error:
 				'Email or Password is incorrect. Please try logging in again.'
 		});
@@ -35,6 +37,7 @@ router.post('/', async (req, res) => {
 		} catch (e) {
 			res.render('../src/views/login/index', {
 				hasErrors: true,
+				hideLogout: true,
 				error:
 					'Email or Password is incorrect. Please try logging in again.'
 			});
@@ -46,6 +49,7 @@ router.post('/', async (req, res) => {
 		} else {
 			return res.status(401).render('../src/views/login/index', {
 				hasErrors: true,
+				hideLogout: true,
 				error:
 					'Email or Password is incorrect. Please try logging in again.'
 			});
@@ -54,6 +58,7 @@ router.post('/', async (req, res) => {
 
 	res.status(401).render('../src/views/login/index', {
 		hasErrors: true,
+		hideLogout: true,
 		error: 'Email or Password is incorrect. Please try logging in again.'
 	});
 

@@ -33,45 +33,80 @@
     }
 </script>
 
-<body>
-    <div class="row">
-        <div class="column">
-            <H2 class="title">Pending</H2>
 
-            <div class="div" id="pending" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="row">
+    <div class="column">
+        <H2 class="title">Pending</H2>
+        {{#each pending_tasks}}
+        <div class="tickets" id="drag1" draggable="true" ondragstart="drag(event)" width="336" height="69">
+            {{taskName}}
+            {{createdBy}}
+            {{tags}}
+            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
+                <input type="submit" value="Edit">
+            </form>
+            <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
+                <input type="submit" value="View Comments">
+            </form>
         </div>
-        <div class="column">
-            <H2 class="title">In Progress</H2>
-            <div class="div" id='in_progress' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        </div>
+        {{/each}}
 
-        <div class="column">
-            <H2 class="title">Review</H2>
-            <div class="div" id="review" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="div" id="pending" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    </div>
+    <div class="column">
+        <H2 class="title">In Progress</H2>
+        {{#each in_progress_tasks}}
+        <div class="tickets" id="drag" draggable="true" ondragstart="drag(event)" width="336" height="69">
+            {{taskName}}
+            {{createdBy}}
+            {{tags}}
+            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
+                <input type="submit" value="Edit">
+            </form>
+            <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
+                <input type="submit" value="View Comments">
+            </form>
         </div>
-        <div class="column">
-            <H2 class="title">Done</H2>
-            <div class="div" id="done" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        {{/each}}
+        <div class="div" id='in_progress' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    </div>
+
+    <div class="column">
+        <H2 class="title">Review</H2>
+        {{#each review_tasks}}
+        <div class="tickets" id="drag3" draggable="true" ondragstart="drag(event)" width="336" height="69">
+            {{taskName}}
+            {{createdBy}}
+            {{tags}}
+            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
+                <input type="submit" value="Edit">
+            </form>
+            <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
+                <input type="submit" value="View Comments">
+            </form>
         </div>
+        {{/each}}
+        <div class="div" id="review" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     </div>
-    <!--test tickets!-->
-    <div class="tickets" id="drag1" draggable="true" ondragstart="drag(event)" width="336" height="69">
-        <p>Ticket</p>
-        <ol>
-            <li>this</li>
-            <li>is a</li>
-            <li>ticket</li>
-        </ol>
+    <div class="column">
+        <H2 class="title">Done</H2>
+        {{#each review_tasks}}
+        <div class="tickets" id="drag4" draggable="true" ondragstart="drag(event)" width="336" height="69">
+            {{taskName}}
+            {{createdBy}}
+            {{tags}}
+            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
+                <input type="submit" value="Edit">
+            </form>
+            <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
+                <input type="submit" value="View Comments">
+            </form>
+        </div>
+        {{/each}}
+        <div class="div" id="done" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     </div>
-    <div class="tickets" id="drag2" draggable="true" ondragstart="drag(event)" width="336" height="69">
-        <p>Ticket</p>
-        <ol>
-            <li>this</li>
-            <li>is a</li>
-            <li>ticket</li>
-        </ol>
-    </div>
-</body>
+</div>
+
 <form action="/tasks/create" method="GET" id="add_task">
     <input type="submit" value="Add a Task">
 </form>
