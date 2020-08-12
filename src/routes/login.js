@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const xss = require('xss');
 const users = require('../datalayer/users');
 const connection = require('../datalayer/mongoConnection');
 
@@ -16,7 +15,7 @@ router.post('/', async (req, res) => {
 	let user;
 
 	try {
-		user = await users.getUserByEmail(xss(input['email'].toLowerCase()));
+		user = await users.getUserByEmail(input['email'].toLowerCase());
 	} catch (e) {
 		return res.render('../src/views/login/index', {
 			hasErrors: true,
@@ -25,12 +24,12 @@ router.post('/', async (req, res) => {
 		});
 	}
 
-	if (xss(input['email'].toLowerCase()) === user.email) {
+	if (input['email'].toLowerCase() === user.email) {
 		let correctPassword = false;
 
 		try {
 			correctPassword = user.checkPassword(
-				xss(input['password']),
+				input['password'],
 				user.hashedPassword
 			);
 		} catch (e) {
