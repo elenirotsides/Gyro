@@ -52,3 +52,42 @@ img {
 	grid-template-rows: repeat(auto-fill);
 	grid-gap: 1rem;
 }
+.column {
+	float: left;
+	width: 25%;
+}
+
+.header_text {
+	vertical-align: top;
+	font-size: 50pt;
+}
+
+.row:after {
+	content: '';
+	display: table;
+	clear: both;
+}
+img {
+	width: 5%;
+	height: auto;
+}
+
+.row .column .div {
+	min-height: 70px;
+	padding: 10px;
+	height: auto;
+	width: 350px;
+	background-color: lightgray;
+	border: 1px solid #aaaaaa;
+	background-color: #f5f5f5;
+}
+
+.tickets {
+	border-radius: 8px;
+	box-shadow: 0 0 5px 1px lightgrey;
+	width: 320px;
+	padding: 5px;
+	max-width: 320px;
+	margin: 12px;
+	background: white;
+}
