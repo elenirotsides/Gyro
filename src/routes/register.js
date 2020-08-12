@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const xss = require('xss');
+const users = require('../datalayer/users');
+const connection = require('../datalayer/mongoConnection');
 
 router.get('/', async (req, res) => {
 	res.render('../src/views/login/register');
@@ -13,37 +14,64 @@ router.post('/', async (req, res) => {
 	//log user in
 	//route to kanban board
 
-	//NOTE: for now, I'm sending jsons, but I will edit this later so it injects error into a handlebar file or something
+	//error handling below, but I made the html fields required, so it may never even hit this point
+	//thinking of checking for blank input, test that Eleni
 	if (!input['firstName']) {
-		res.status(400).json({ error: 'You must provide a first name' });
+		return res.status(400).render('../src/views/login/register', {
+			hasErrors: true,
+			error: 'Uh oh! Something went wrong. Please try again.'
+		});
 	}
 	if (!input['lastName']) {
-		res.status(400).json({ error: 'You must provide a last name' });
+		return res.status(400).render('../src/views/login/register', {
+			hasErrors: true,
+			error: 'Uh oh! Something went wrong. Please try again.'
+		});
 	}
 	if (!input['email']) {
-		res.status(400).json({ error: 'You must provide an email address' });
+		return res.status(400).render('../src/views/login/register', {
+			hasErrors: true,
+			error: 'Uh oh! Something went wrong. Please try again.'
+		});
 	}
 	if (!input['password']) {
-		res.status(400).json({ error: 'You must provide a password' });
+		return res.status(400).render('../src/views/login/register', {
+			hasErrors: true,
+			error: 'Uh oh! Something went wrong. Please try again.'
+		});
 	}
 
+	let addUser;
+	//add logic here for not being able to add a user if the email already exists
 	try {
-		await usersData.addUser(
+		addUser = await users.addUser(
 			input['firstName'],
 			input['lastName'],
 			input['email'].toLowerCase(),
 			input['password']
 		);
-
-		res.redirect('/login');
-		// My logic is to make the user login themselves.
-		// The login route takes care of redirecting them to the kanban board anyway, so I figured why do it here to
 	} catch (e) {
-		res.render('../src/views/login/register', {
+		return res.status(400).render('../src/views/login/register', {
 			hasErrors: true,
 			error: 'Whoops! Something has gone wrong, please try again.'
 		}); //fix this
 	}
+
+	let dbUserEmail = await users.getUserByEmail(addUser.email);
+	if (dbUserEmail === input['email'].toLowerCase()) {
+		//checking to make sure that the user was inserted into the db
+	} else {
+		return res.status(400).render('../src/views/login/register', {
+			hasErrors: true,
+			error: 'Error registering, please try again'
+		});
+	}
+	//if addUser was successful, set req.session.user and route to /board
+	//add a middleware to only show /login page to non-authenticated users
+	res.redirect('/login'); //fix this
+
+	const db = await connection();
+	await db.serverConfig.close();
 });
 
 module.exports = router;

@@ -17,7 +17,7 @@ app.set('view engine', 'handlebars');
 
 app.use(
 	session({
-		name: 'AuthCookie', //name the cookie, idk what to call it...
+		name: 'AuthCookie',
 		secret: 'Not Gyro the food...Gyro the Jira knockoff',
 		resave: false,
 		saveUninitialized: true
