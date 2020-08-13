@@ -4,7 +4,7 @@ const users = require('../datalayer/users');
 
 router.get('/', async (req, res) => {
 	res.render('../src/views/login/index', {
-		title: 'Please signin',
+		title: 'Please Log In',
 		hideLogout: true
 	});
 });
