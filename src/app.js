@@ -20,7 +20,6 @@ const xssProtectionMiddleware = (req, res, next) => {
 app.use('/public', static);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(xssProtectionMiddleware);
 
 app.engine(
 	'handlebars',
@@ -37,19 +36,24 @@ app.use(
 	})
 );
 
-/*
-middlware function for rerouting to the login page if user isn't logged in
+app.use(xssProtectionMiddleware);
 
-app.use(async (req, res, next) => {
-	if (!req.session.user) {
-		return res
-			.status(403)
-			.render('../src/views/login/index', { error: true });
+//If a user is logged in, they should never see the login or register page
+app.use('/login', (req, res, next) => {
+	if (req.session.user) {
+		return res.status(403).redirect('/board');
 	} else {
 		next();
 	}
 });
-*/
+app.use('/register', (req, res, next) => {
+	if (req.session.user) {
+		return res.status(403).redirect('/board');
+	} else {
+		next();
+	}
+});
+
 configRoutes(app);
 
 app.listen(3000, () => {
