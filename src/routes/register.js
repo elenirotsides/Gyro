@@ -4,7 +4,7 @@ const users = require('../datalayer/users');
 const connection = require('../datalayer/mongoConnection');
 
 router.get('/', async (req, res) => {
-	res.render('../src/views/login/register');
+	res.render('../src/views/login/register', { hideLogout: true });
 });
 
 router.post('/', async (req, res) => {
@@ -19,24 +19,28 @@ router.post('/', async (req, res) => {
 	if (!input['firstName']) {
 		return res.status(400).render('../src/views/login/register', {
 			hasErrors: true,
+			hideLogout: true,
 			error: 'Uh oh! Something went wrong. Please try again.'
 		});
 	}
 	if (!input['lastName']) {
 		return res.status(400).render('../src/views/login/register', {
 			hasErrors: true,
+			hideLogout: true,
 			error: 'Uh oh! Something went wrong. Please try again.'
 		});
 	}
 	if (!input['email']) {
 		return res.status(400).render('../src/views/login/register', {
 			hasErrors: true,
+			hideLogout: true,
 			error: 'Uh oh! Something went wrong. Please try again.'
 		});
 	}
 	if (!input['password']) {
 		return res.status(400).render('../src/views/login/register', {
 			hasErrors: true,
+			hideLogout: true,
 			error: 'Uh oh! Something went wrong. Please try again.'
 		});
 	}
@@ -53,6 +57,7 @@ router.post('/', async (req, res) => {
 	} catch (e) {
 		return res.status(400).render('../src/views/login/register', {
 			hasErrors: true,
+			hideLogout: true,
 			error: 'Whoops! Something has gone wrong, please try again.'
 		}); //fix this
 	}
@@ -63,6 +68,7 @@ router.post('/', async (req, res) => {
 	} else {
 		return res.status(400).render('../src/views/login/register', {
 			hasErrors: true,
+			hideLogout: true,
 			error: 'Error registering, please try again'
 		});
 	}

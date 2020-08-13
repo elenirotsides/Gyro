@@ -38,7 +38,8 @@
     <div class=column id="pending" ondrop="drop(event)" ondragover="allowDrop(event)">
         <H2 class="title">Pending</H2>
         {{#each pending_tasks}}
-        <div class="tickets" id="drag1" draggable="true" ondragstart="drag(event)" width="336" height="69">
+        <div class="tickets" id="drag1" onclick="location.href='YOUR-URL-HERE';" style="cursor: pointer; draggable="
+            true" ondragstart="drag(event)" width="336" height="69">
             {{taskName}}
             {{createdBy}}
             {{#each tags}}
