@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const tasks = require('../datalayer/tasks');
-var ObjectID = require('mongodb').ObjectID;
-const connection = require('../datalayer/mongoConnection');
+const users = require('../datalayer/users');
 
 router.get('/create', async (req, res) => {
 	res.render('../src/views/board/add_task', { newTask: true });
@@ -11,12 +10,14 @@ router.get('/create', async (req, res) => {
 router.get('/:id/edit', async (req, res) => {
 	try {
 		const task_to_edit = await tasks.getTask(req.params.id);
+		const all_users = await users.getAllUsers();
 
 		res.render('../src/views/board/add_task', {
 			newTask: false,
 			editTask: true,
 			task_name: task_to_edit.taskName,
-			tags: task_to_edit.tags
+			tags: task_to_edit.tags,
+			users: all_users
 		});
 	} catch (e) {
 		res.status(404).json({ message: `task ${req.params.id} not found` });

@@ -3,6 +3,14 @@ const ObjectID = require('mongodb').ObjectID;
 const verify = require('../util/verify');
 const auth = require('../util/auth');
 
+const getAllUsers = async () => {
+	const collection = await users();
+
+	const userList = await collection.find({}).toArray();
+
+	return userList;
+};
+
 const addUser = async (firstName, lastName, email, plaintextPassword) => {
 	verify.str(firstName);
 	verify.str(lastName);
@@ -57,4 +65,4 @@ const getUserByEmail = async (email) => {
 	return getUser(String(obj._id));
 };
 
-module.exports = { addUser, getUser, getUserByEmail };
+module.exports = { getAllUsers, addUser, getUser, getUserByEmail };

@@ -38,6 +38,12 @@
         <input type="checkbox" id="sample" name="tag3" value="sample">
         <label for="sample"> Sample</label>
     </div>
+    <label>Assigned To</label>
+    <select id="assigned_to" name="assigned_to">
+        <option value="noone">No One</option>
+        {{#each users}}
+        <option value="{{email}}">{{email}}</option>
+        {{/each}}
     </select>
     <input type="submit" value="Submit">
 </form>
