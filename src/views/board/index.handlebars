@@ -34,8 +34,8 @@
 </script>
 
 
-<div class="row">
-    <div class="column">
+<div class="kanban_board">
+    <div class=column id="pending" ondrop="drop(event)" ondragover="allowDrop(event)">
         <H2 class="title">Pending</H2>
         {{#each pending_tasks}}
         <div class="tickets" id="drag1" draggable="true" ondragstart="drag(event)" width="336" height="69">
@@ -54,10 +54,8 @@
             </form>
         </div>
         {{/each}}
-
-        <div class="div" id="pending" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     </div>
-    <div class="column">
+    <div class="column" id='in_progress' ondrop="drop(event)" ondragover="allowDrop(event)">
         <H2 class="title">In Progress</H2>
         {{#each in_progress_tasks}}
         <div class="tickets" id="drag" draggable="true" ondragstart="drag(event)" width="336" height="69">
@@ -76,10 +74,9 @@
             </form>
         </div>
         {{/each}}
-        <div class="div" id='in_progress' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     </div>
 
-    <div class="column">
+    <div class="column" id="review" ondrop="drop(event)" ondragover="allowDrop(event)">
         <H2 class="title">Review</H2>
         {{#each review_tasks}}
         <div class="tickets" id="drag3" draggable="true" ondragstart="drag(event)" width="336" height="69">
@@ -98,9 +95,8 @@
             </form>
         </div>
         {{/each}}
-        <div class="div" id="review" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     </div>
-    <div class="column">
+    <div class="column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
         <H2 class="title">Done</H2>
         {{#each review_tasks}}
         <div class="tickets" id="drag4" draggable="true" ondragstart="drag(event)" width="336" height="69">
@@ -119,7 +115,6 @@
             </form>
         </div>
         {{/each}}
-        <div class="div" id="done" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     </div>
 </div>
 
