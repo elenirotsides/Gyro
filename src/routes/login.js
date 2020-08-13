@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const users = require('../datalayer/users');
-const connection = require('../datalayer/mongoConnection');
 
 router.get('/', async (req, res) => {
 	res.render('../src/views/login/index', {
@@ -61,9 +60,6 @@ router.post('/', async (req, res) => {
 		hideLogout: true,
 		error: 'Email or Password is incorrect. Please try logging in again.'
 	});
-
-	const db = await connection();
-	await db.serverConfig.close();
 });
 
 module.exports = router;

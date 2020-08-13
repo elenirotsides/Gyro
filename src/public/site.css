@@ -97,3 +97,12 @@ img {
 	margin: 12px;
 	background: white;
 }
+
+.tag {
+	background-color: orange;
+	border: none;
+	color: black;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 16px;
+}
