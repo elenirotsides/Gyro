@@ -38,8 +38,8 @@
     <div class=column id="pending" ondrop="drop(event)" ondragover="allowDrop(event)">
         <H2 class="title">Pending</H2>
         {{#each pending_tasks}}
-        <div class="tickets" id="drag1" onclick="location.href='YOUR-URL-HERE';" style="cursor: pointer; draggable="
-            true" ondragstart="drag(event)" width="336" height="69">
+        <div class="tickets" id="drag1" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true"
+            ondragstart="drag(event)" width="336" height="69">
             {{taskName}}
             {{createdBy}}
             {{#each tags}}
@@ -47,9 +47,6 @@
                 {{this}}
             </button>
             {{/each}}
-            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
-                <input type="submit" value="Edit">
-            </form>
             <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
                 <input type="submit" value="View Comments">
             </form>
@@ -59,7 +56,8 @@
     <div class="column" id='in_progress' ondrop="drop(event)" ondragover="allowDrop(event)">
         <H2 class="title">In Progress</H2>
         {{#each in_progress_tasks}}
-        <div class="tickets" id="drag" draggable="true" ondragstart="drag(event)" width="336" height="69">
+        <div class="tickets" id="drag" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true"
+            ondragstart="drag(event)" width="336" height="69">
             {{taskName}}
             {{createdBy}}
             {{#each tags}}
@@ -67,9 +65,6 @@
                 {{this}}
             </button>
             {{/each}}
-            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
-                <input type="submit" value="Edit">
-            </form>
             <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
                 <input type="submit" value="View Comments">
             </form>
@@ -80,7 +75,8 @@
     <div class="column" id="review" ondrop="drop(event)" ondragover="allowDrop(event)">
         <H2 class="title">Review</H2>
         {{#each review_tasks}}
-        <div class="tickets" id="drag3" draggable="true" ondragstart="drag(event)" width="336" height="69">
+        <div class="tickets" id="drag3" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true"
+            ondragstart="drag(event)" width="336" height="69">
             {{taskName}}
             {{createdBy}}
             {{#each tags}}
@@ -88,9 +84,6 @@
                 {{this}}
             </button>
             {{/each}}
-            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
-                <input type="submit" value="Edit">
-            </form>
             <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
                 <input type="submit" value="View Comments">
             </form>
@@ -100,7 +93,8 @@
     <div class="column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
         <H2 class="title">Done</H2>
         {{#each review_tasks}}
-        <div class="tickets" id="drag4" draggable="true" ondragstart="drag(event)" width="336" height="69">
+        <div class="tickets" id="drag4" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true"
+            ondragstart="drag(event)" width="336" height="69">
             {{taskName}}
             {{createdBy}}
             {{#each tags}}
@@ -108,9 +102,6 @@
                 {{this}}
             </button>
             {{/each}}
-            <form action="/tasks/{{_id}}/edit" method="GET" id="edit_task">
-                <input type="submit" value="Edit">
-            </form>
             <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
                 <input type="submit" value="View Comments">
             </form>
