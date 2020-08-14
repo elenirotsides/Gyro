@@ -53,11 +53,13 @@ router.post('/create', async (req, res) => {
 	if (!input['tags']) {
 		res.status(400).json({ error: 'There must be a tag' }); //are tags required?
 	}
-	//req.session.user should be firstName + LastName? Or all the user data?
+	//console.log the below to test the output
+	createdBy = req.session.user.firstName + ' ' + req.session.user.lastName;
+	//what kind of data did Wes intend his createdBy field to have? full name? id?
 	try {
 		await tasks.addTask(
 			input['taskName'],
-			req.session.user,
+			createdBy,
 			input['status'],
 			input['tags']
 		);
