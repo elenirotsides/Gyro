@@ -18,44 +18,36 @@ router.post('/', async (req, res) => {
 	*/
 
 	if (!input['firstName'].trim()) {
-		return res
-			.status(400)
-			.render('../src/views/login/register', {
-				title: 'Error',
-				hideLogout: true,
-				hasErrors: true,
-				error: 'Uh oh! No blank inputs allowed, please try again.'
-			});
+		return res.status(400).render('../src/views/login/register', {
+			title: 'Error',
+			hideLogout: true,
+			hasErrors: true,
+			error: 'Uh oh! No blank inputs allowed, please try again.'
+		});
 	}
 	if (!input['lastName'].trim()) {
-		return res
-			.status(400)
-			.render('../src/views/login/register', {
-				title: 'Error',
-				hideLogout: true,
-				hasErrors: true,
-				error: 'Uh oh! No blank inputs allowed, please try again.'
-			});
+		return res.status(400).render('../src/views/login/register', {
+			title: 'Error',
+			hideLogout: true,
+			hasErrors: true,
+			error: 'Uh oh! No blank inputs allowed, please try again.'
+		});
 	}
 	if (!input['email'].trim()) {
-		return res
-			.status(400)
-			.render('../src/views/login/register', {
-				title: 'Error',
-				hideLogout: true,
-				hasErrors: true,
-				error: 'Uh oh! No blank inputs allowed, please try again.'
-			});
+		return res.status(400).render('../src/views/login/register', {
+			title: 'Error',
+			hideLogout: true,
+			hasErrors: true,
+			error: 'Uh oh! No blank inputs allowed, please try again.'
+		});
 	}
 	if (!input['password'].trim()) {
-		return res
-			.status(400)
-			.render('../src/views/login/register', {
-				title: 'Error',
-				hideLogout: true,
-				hasErrors: true,
-				error: 'Uh oh! No blank inputs allowed, please try again.'
-			});
+		return res.status(400).render('../src/views/login/register', {
+			title: 'Error',
+			hideLogout: true,
+			hasErrors: true,
+			error: 'Uh oh! No blank inputs allowed, please try again.'
+		});
 	}
 
 	let emailExists;

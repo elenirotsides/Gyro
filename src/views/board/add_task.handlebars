@@ -27,19 +27,25 @@
 <H1>Edit a Task</H1>
 <form action="/tasks/{{_id}}/edit" method="PATCH" id="add_task_form">
     <label>Task Name</label>
-    <input type="text" name="taskName" id="taskName" value={{task_name}} />
+    <input type="text" name="taskName" id="taskName" value="{{task_name}}"" />
     </br>
     <label>Tags</label>
-    <div>
-        <input type="checkbox" id="h_priority" name="tag1" value="h_priority">
-        <label for="h_priority"> High Priority</label><br>
-        <input type="checkbox" id="l_priority" name="tag2" value="l_priority">
-        <label for="l_priority"> Low Priority</label><br>
-        <input type="checkbox" id="sample" name="tag3" value="sample">
-        <label for="sample"> Sample</label>
-    </div>
+    {{#each tags}}
+    <button class=" tag">
+    {{this}}
+    </button>
+    {{/each}}
+    <input type="text" name="new_tag" id="new_tag" placeholder="Add a new tag" />
+    </br>
+    <label>Assigned To</label>
+    <select id="assigned_to" name="assigned_to">
+        <option value="noone">No One</option>
+        {{#each users}}
+        <option value="{{email}}">{{email}}</option>
+        {{/each}}
     </select>
-    <input type="submit" value="Submit">
+    </br>
+    <input type="submit" value="Update Task">
 </form>
 {{/if}}{{/if}}
 
@@ -49,10 +55,11 @@
     {{/each}}
 </ul>
 
+
 {{#if comments}}
 <form action="/{{_id}}/comments/create" method="POST" id="add_task_form">
     <label>Add a Comment</label>
     <input type="text" id="new_comment">
-    <input type="submit" value="Submit">
+    <input type="submit" value="Add new comment">
 </form>
 {{/if}}
