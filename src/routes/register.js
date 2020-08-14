@@ -17,31 +17,12 @@ router.post('/', async (req, res) => {
 	The below error handling takes care of the case when a user inputs only spaces
 	*/
 
-	if (!input['firstName'].trim()) {
-		return res.status(400).render('../src/views/login/register', {
-			title: 'Error',
-			hideLogout: true,
-			hasErrors: true,
-			error: 'Uh oh! No blank inputs allowed, please try again.'
-		});
-	}
-	if (!input['lastName'].trim()) {
-		return res.status(400).render('../src/views/login/register', {
-			title: 'Error',
-			hideLogout: true,
-			hasErrors: true,
-			error: 'Uh oh! No blank inputs allowed, please try again.'
-		});
-	}
-	if (!input['email'].trim()) {
-		return res.status(400).render('../src/views/login/register', {
-			title: 'Error',
-			hideLogout: true,
-			hasErrors: true,
-			error: 'Uh oh! No blank inputs allowed, please try again.'
-		});
-	}
-	if (!input['password'].trim()) {
+	if (
+		!input['firstName'].trim() ||
+		!input['lastName'].trim() ||
+		!input['email'].trim() ||
+		!input['password'].trim()
+	) {
 		return res.status(400).render('../src/views/login/register', {
 			title: 'Error',
 			hideLogout: true,
