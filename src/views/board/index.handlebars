@@ -33,81 +33,28 @@
     }
 </script>
 
-
 <div class="kanban_board">
-    <div class=column id="pending" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <H2 class="title">Pending</H2>
-        {{#each pending_tasks}}
-        <div class="tickets" id="drag1" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true"
-            ondragstart="drag(event)" width="336" height="69">
-            {{taskName}}
-            {{createdBy}}
-            {{#each tags}}
-            <button class="tag">
-                {{this}}
-            </button>
+    {{#each task_sections}}
+        <div class=column id="{{section_name}}" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <H2 class="title">{{section_name}}</H2>
+            {{#each task_list}}
+            <div class="tickets" id="{{_id}}" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true"
+                ondragstart="drag(event)" width="336" height="69">
+                {{taskName}}
+                {{#each tags}}
+                <button class="tag">
+                    {{this}}
+                </button>
+                {{/each}}
+                <br>
+                {{createdBy}}
+                <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
+                    <input type="submit" value="View Comments">
+                </form>
+            </div>
             {{/each}}
-            <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
-                <input type="submit" value="View Comments">
-            </form>
         </div>
-        {{/each}}
-    </div>
-    <div class="column" id='in_progress' ondrop="drop(event)" ondragover="allowDrop(event)">
-        <H2 class="title">In Progress</H2>
-        {{#each in_progress_tasks}}
-        <div class="tickets" id="drag" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true"
-            ondragstart="drag(event)" width="336" height="69">
-            {{taskName}}
-            {{createdBy}}
-            {{#each tags}}
-            <button class="tag">
-                {{this}}
-            </button>
-            {{/each}}
-            <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
-                <input type="submit" value="View Comments">
-            </form>
-        </div>
-        {{/each}}
-    </div>
-
-    <div class="column" id="review" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <H2 class="title">Review</H2>
-        {{#each review_tasks}}
-        <div class="tickets" id="drag3" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true"
-            ondragstart="drag(event)" width="336" height="69">
-            {{taskName}}
-            {{createdBy}}
-            {{#each tags}}
-            <button class="tag">
-                {{this}}
-            </button>
-            {{/each}}
-            <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
-                <input type="submit" value="View Comments">
-            </form>
-        </div>
-        {{/each}}
-    </div>
-    <div class="column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <H2 class="title">Done</H2>
-        {{#each review_tasks}}
-        <div class="tickets" id="drag4" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true"
-            ondragstart="drag(event)" width="336" height="69">
-            {{taskName}}
-            {{createdBy}}
-            {{#each tags}}
-            <button class="tag">
-                {{this}}
-            </button>
-            {{/each}}
-            <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
-                <input type="submit" value="View Comments">
-            </form>
-        </div>
-        {{/each}}
-    </div>
+    {{/each}}
 </div>
 
 <form action="/tasks/create" method="GET" id="add_task">

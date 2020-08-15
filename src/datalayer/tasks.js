@@ -2,9 +2,18 @@ const tasks = require('./mongoCollections').tasks;
 const ObjectID = require('mongodb').ObjectID;
 const verify = require('../util/verify');
 
-const addTask = async (taskName, createdBy, status, tags) => {
+const addTask = async (
+	taskName,
+	description,
+	createdBy,
+	assignedTo,
+	status,
+	tags
+) => {
 	verify.str(taskName);
+	verify.str(description);
 	verify.str(createdBy);
+	verify.str(assignedTo);
 	verify.num(status);
 	verify.nonzeroArr(tags);
 
@@ -14,7 +23,9 @@ const addTask = async (taskName, createdBy, status, tags) => {
 
 	let insertInfo = await collection.insertOne({
 		taskName: taskName,
+		description: description,
 		createdBy: createdBy,
+		assignedTo: assignedTo,
 		status: status,
 		tags: tags,
 		comments: [],
@@ -27,6 +38,20 @@ const addTask = async (taskName, createdBy, status, tags) => {
 	if (id === 0) throw new Error('Insertion error!');
 
 	return await getTask(String(id));
+};
+
+const deleteTask = async (id) => {
+	verify.str(id);
+
+	let collection = await tasks();
+
+	let obj = await getTask(id);
+
+	let result = await collection.deleteOne({ _id: ObjectID(id) });
+	if (result.deletedCount === 0)
+		throw new Error('Could not delete task with ID ' + id);
+
+	return obj;
 };
 
 const getTask = async (id) => {
@@ -87,6 +112,25 @@ const getAllTasks = async () => {
 	return taskList;
 };
 
+const updateTask = async (
+	id,
+	taskName,
+	description,
+	createdBy,
+	assignedTo,
+	status,
+	tags
+) => {
+	await _updateTask(id, {
+		taskName: taskName,
+		description: description,
+		createdBy: createdBy,
+		assignedTo: assignedTo,
+		status: status,
+		tags: tags
+	});
+};
+
 const setTaskTags = async (id, tags) => {
 	verify.nonzeroArr(tags);
 	await _updateTask(id, { tags: tags });
@@ -139,6 +183,8 @@ const _updateTask = async (id, changes) => {
 
 module.exports = {
 	addTask,
+	deleteTask,
+	updateTask,
 	getTask,
 	getTaskByName,
 	getTasksByTag,

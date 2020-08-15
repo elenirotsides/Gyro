@@ -23,6 +23,8 @@ const main = async () => {
 
 	let newTask = await tasks.addTask(
 		'Add actual functionality',
+		"This seems like a feature that we need to get an A+... so let's do that.",
+		String(userWes._id),
 		String(userWes._id),
 		0,
 		['boring', 'notgonnadoit']
@@ -47,24 +49,53 @@ const main = async () => {
 		console.log(e);
 	}
 
-	newTask = await tasks.addTask('Write a webbapp', String(userWes._id), 1, [
-		'tag1',
-		'tag2'
-	]);
+	newTask = await tasks.addTask(
+		'Write a webbapp',
+		'this is a description',
+		String(userWes._id),
+		String(userWes._id),
+		1,
+		['tag1', 'tag2']
+	);
 
-	newTask = await tasks.addTask('Learn Computers', String(userWes._id), 1, [
-		'beepboopbeep'
-	]);
+	newTask = await tasks.addTask(
+		'beep boop beep',
+		'this is not a good description of this feature.',
+		String(userWes._id),
+		String(userWes._id),
+		1,
+		['tag1', 'tag2']
+	);
 
-	newTask = await tasks.addTask('(-__-)', String(userWes._id), 0, [
-		'tag1',
-		'tag3'
-	]);
+	newTask = await tasks.addTask(
+		'(-__-)',
+		'this description',
+		String(userWes._id),
+		String(userWes._id),
+		1,
+		['tag1', 'tag3']
+	);
 
-	newTask = await tasks.addTask('(o__o)', String(userWes._id), 0, [
-		'tag1',
-		'tag3'
-	]);
+	await tasks.deleteTask(String(newTask._id));
+
+	newTask = await tasks.addTask(
+		'(O__o)',
+		'descript',
+		String(userWes._id),
+		String(userWes._id),
+		1,
+		['tag1', 'tag3']
+	);
+
+	await tasks.updateTask(
+		String(newTask._id),
+		'edited name',
+		'Description',
+		String(userWes._id),
+		String(userWes._id),
+		0,
+		['test', 'tags']
+	);
 
 	console.log('Database initialized.');
 	await db.serverConfig.close();

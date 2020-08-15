@@ -1,28 +1,42 @@
 const express = require('express');
 const router = express.Router();
 const tasks = require('../datalayer/tasks');
+const users = require('../datalayer/users');
 
 router.get('/', async (req, res) => {
 	let all_tasks = await tasks.getAllTasks();
 
-	let pending_tasks = all_tasks.filter(function (e) {
-		return e.status === 0;
-	});
-	let in_progress_tasks = all_tasks.filter(function (e) {
-		return e.status === 1;
-	});
-	let review_tasks = all_tasks.filter(function (e) {
-		return e.status === 2;
-	});
-	let done_tasks = all_tasks.filter(function (e) {
-		return e.status === 3;
-	});
+	all_tasks = await Promise.all(
+		all_tasks.map(async (task) => {
+			let user = await users.getUser(task.createdBy);
+			return {
+				...task,
+				createdBy: user.firstName + ' ' + user.lastName
+			};
+		})
+	);
+
+	let task_sections = [
+		{
+			section_name: 'Pending',
+			task_list: all_tasks.filter((task) => task.status === 0)
+		},
+		{
+			section_name: 'In Progress',
+			task_list: all_tasks.filter((task) => task.status === 1)
+		},
+		{
+			section_name: 'Review',
+			task_list: all_tasks.filter((task) => task.status === 2)
+		},
+		{
+			section_name: 'Done',
+			task_list: all_tasks.filter((task) => task.status === 3)
+		}
+	];
 
 	res.render('../src/views/board/index', {
-		pending_tasks: pending_tasks,
-		in_progress_tasks: in_progress_tasks,
-		review_tasks: review_tasks,
-		done_tasks: done_tasks
+		task_sections: task_sections
 	});
 });
 
