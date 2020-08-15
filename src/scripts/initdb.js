@@ -94,8 +94,10 @@ const main = async () => {
 		String(userWes._id),
 		String(userWes._id),
 		0,
-		['test', 'tags']
+		['test', 'THISWILLBELOWERCASE']
 	);
+
+	console.log(await tasks.getTasksByTag('thiswillbe'));
 
 	console.log('Database initialized.');
 	await db.serverConfig.close();

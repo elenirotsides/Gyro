@@ -27,7 +27,7 @@ const addTask = async (
 		createdBy: createdBy,
 		assignedTo: assignedTo,
 		status: status,
-		tags: tags,
+		tags: tags.map((tag) => tag.toLowerCase()),
 		comments: [],
 		postedDate: now,
 		lastUpdated: now
@@ -67,6 +67,9 @@ const getTask = async (id) => {
 
 const getTasksByTag = async (tag) => {
 	verify.str(tag);
+
+	// for easy matching
+	tag = tag.toLowerCase();
 
 	let collection = await tasks();
 
@@ -127,7 +130,7 @@ const updateTask = async (
 		createdBy: createdBy,
 		assignedTo: assignedTo,
 		status: status,
-		tags: tags
+		tags: tags.map((tag) => tag.toLowerCase())
 	});
 };
 

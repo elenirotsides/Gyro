@@ -19,18 +19,22 @@ router.get('/', async (req, res) => {
 	let task_sections = [
 		{
 			section_name: 'Pending',
+			task_stage: 0,
 			task_list: all_tasks.filter((task) => task.status === 0)
 		},
 		{
 			section_name: 'In Progress',
+			task_stage: 1,
 			task_list: all_tasks.filter((task) => task.status === 1)
 		},
 		{
 			section_name: 'Review',
+			task_stage: 2,
 			task_list: all_tasks.filter((task) => task.status === 2)
 		},
 		{
 			section_name: 'Done',
+			task_stage: 3,
 			task_list: all_tasks.filter((task) => task.status === 3)
 		}
 	];
