@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const tasks = require('../datalayer/tasks');
-var ObjectID = require('mongodb').ObjectID;
-const connection = require('../datalayer/mongoConnection');
+const users = require('../datalayer/users');
 
 router.get('/create', async (req, res) => {
 	res.render('../src/views/board/add_task', { newTask: true });
@@ -11,12 +10,14 @@ router.get('/create', async (req, res) => {
 router.get('/:id/edit', async (req, res) => {
 	try {
 		const task_to_edit = await tasks.getTask(req.params.id);
+		const all_users = await users.getAllUsers();
 
 		res.render('../src/views/board/add_task', {
 			newTask: false,
 			editTask: true,
 			task_name: task_to_edit.taskName,
-			tags: task_to_edit.tags
+			tags: task_to_edit.tags,
+			users: all_users
 		});
 	} catch (e) {
 		res.status(404).json({ message: `task ${req.params.id} not found` });
@@ -39,28 +40,27 @@ router.get('/:id/comments', async (req, res) => {
 
 router.post('/create', async (req, res) => {
 	input = req.body;
-
-	//NOTE: for now, I'm sending jsons, but I will edit this later so it injects error into a handlebar file or something
+	//fix this
 	if (!input['taskName']) {
-		res.status(400).json({ error: 'You must name the task' });
+		res.status(400).render('../src/views/board/add_task', {
+			error: 'You must name your task'
+		});
 	}
-	if (!req.session.user) {
-		res.redirect('/login'); // this shouldn't be necessary, I will write a middleware for this
+	if (!input['description']) {
+		res.status(400).render('../src/views.board/add_task', {
+			error: 'You must include a description'
+		});
 	}
-	if (!input['status']) {
-		res.status(400).json({ error: 'There must be a status' });
-	}
-	if (!input['tags']) {
-		res.status(400).json({ error: 'There must be a tag' }); //are tags required?
-	}
+	//assignedTo
 	//console.log the below to test the output
 	createdBy = req.session.user.firstName + ' ' + req.session.user.lastName;
 	//what kind of data did Wes intend his createdBy field to have? full name? id?
 	try {
 		await tasks.addTask(
 			input['taskName'],
+			input['description'],
 			createdBy,
-			input['status'],
+			blah,
 			input['tags']
 		);
 	} catch (e) {
@@ -77,33 +77,38 @@ router.patch('/:id/edit', async (req, res) => {
 });
 
 router.delete('/:id/remove', async (req, res) => {
-	// I think this should be a delete, not a remove
+	// Waiting on Wes for db function
 	//TODO:
 	//Eleni
 });
 
 router.post('/:id/drag', async (req, res) => {
-	//I have no idea what to do here yet!
+	//TODO:
+	//Cassidy
 });
 
 router.post('/:id/comments/create', async (req, res) => {
 	input = req.body;
 
 	if (!input['comment']) {
-		res.status(400).json({
+		res.status(400).render('../src/views/board/add_task', {
 			error: 'You must write a comment to submit a comment'
 		});
 	}
-
+	if (!input['comment'].trim()) {
+		res.status(400).render('../src/views/board/add_task', {
+			hasErrors: true,
+			error: "Comment can't be blank!"
+		});
+	}
 	try {
 		await tasks.addComment(id, req.session.user, input['comment']);
 	} catch (e) {
 		res.render('/:id/comments/create', {
+			hasErrors: true,
 			error: 'Uh oh, something went wrong! Please try again'
 		});
 		//I know the page I'm rendering is wrong here, I will fix that
 	}
-	const db = await connection();
-	await db.serverConfig.close();
 });
 module.exports = router;
