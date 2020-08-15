@@ -1,58 +1,29 @@
-<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
-<script>
-    function allowDrop(ev) {
-        ev.preventDefault();
-    }
-
-    function drag(ev) {
-        ev.dataTransfer.setData('text', ev.target.id);
-    }
-
-    function drop(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData('text');
-        console.log(data);
-        console.log(ev.dataTransfer);
-        console.log(ev.target.id)
-        ev.target.appendChild(document.getElementById(data));
-
-        var output = {};
-        output.ticketId = data;
-        output.ticketStatus = ev.target.id;
-
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(output),
-            contentType: 'application/json',
-            url: 'http://localhost:3000/endpoint',
-            success: function (output) {
-                console.log('success');
-                console.log(JSON.stringify(output));
-            }
-        })
-    }
-</script>
+<script type="text/javascript" src="/public/js/board.js"></script>
 
 <div class="kanban_board">
     {{#each task_sections}}
         <div class=column id="{{section_name}}" ondrop="drop(event)" ondragover="allowDrop(event)">
             <H2 class="title">{{section_name}}</H2>
-            {{#each task_list}}
-            <div class="tickets" id="{{_id}}" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true"
-                ondragstart="drag(event)" width="336" height="69">
-                {{taskName}}
-                {{#each tags}}
-                <button class="tag">
-                    {{this}}
-                </button>
+            <div class="drop-target" task-stage="{{task_stage}}">
+                {{#each task_list}}
+                <div class="tickets" id="{{_id}}" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true" ondragstart="drag(event)" width="336" height="69">
+                    {{taskName}}
+                    {{#each tags}}
+                    <button class="tag">
+                        {{this}}
+                    </button>
+                    {{/each}}
+                    <br>
+                    {{createdBy}}
+                    <form action="/tasks/{{_id}}/comments" method="GET" id="view_comment_{{_id}}">
+                        <input type="submit" value="View Comments">
+                    </form>
+                    <form action="/tasks/{{_id}}/remove" method="DELETE" id="delete_comment_{{_id}}">
+                        <input type="submit" value="Delete">
+                    </form>
+                </div>
                 {{/each}}
-                <br>
-                {{createdBy}}
-                <form action="/tasks/{{_id}}/comments" method="GET" id="view_comments">
-                    <input type="submit" value="View Comments">
-                </form>
             </div>
-            {{/each}}
         </div>
     {{/each}}
 </div>

@@ -5,16 +5,15 @@ var ObjectID = require('mongodb').ObjectID;
 const connection = require('../datalayer/mongoConnection');
 
 router.get('/create', async (req, res) => {
-	res.render('../src/views/board/add_task', { newTask: true });
+	res.render('../src/views/board/task_form', { newTask: true });
 });
 
 router.get('/:id/edit', async (req, res) => {
 	try {
 		const task_to_edit = await tasks.getTask(req.params.id);
 
-		res.render('../src/views/board/add_task', {
+		res.render('../src/views/board/task_form', {
 			newTask: false,
-			editTask: true,
 			task_name: task_to_edit.taskName,
 			tags: task_to_edit.tags
 		});
@@ -27,9 +26,7 @@ router.get('/:id/comments', async (req, res) => {
 	try {
 		const task_to_view = await tasks.getTask(req.params.id);
 
-		res.render('../src/views/board/add_task', {
-			newTask: false,
-			editTask: false,
+		res.render('../src/views/board/task_comments', {
 			comments: task_to_view.comments
 		});
 	} catch (e) {
@@ -64,7 +61,7 @@ router.post('/create', async (req, res) => {
 			input['tags']
 		);
 	} catch (e) {
-		res.render('/create', {
+		res.render('/tasks/create', {
 			error: 'Uh oh, something went wrong, pleease try again'
 		});
 	}
