@@ -10,13 +10,13 @@
         <form action="/tasks/create" method="POST" id="add_task_form">
             <label>Task Name</label>
             <br>
-            <input required type="text" name="taskName" id="taskName" value={{task_name}}>
+            <input required type="text" name="taskName" id="taskName" value="{{task_name}}">
             <br>
             <label>Tags</label>
             <input required type="text" name="tags" id="tags" class="tag-input" value="{{tags}}">
             <label>Description</label>
             <br>
-            <textarea required type="text" name="decription" id="decription" value={{comments}}></textarea>
+            <textarea required type="text" name="description" id="description" value={{comments}}></textarea>
             <label>Assigned To</label>
             <select required id="assigned_to" name="assigned_to">
                 <option value="noone">No One</option>
