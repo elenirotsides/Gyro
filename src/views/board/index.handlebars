@@ -1,5 +1,10 @@
 <script type="text/javascript" src="/public/js/board.js"></script>
 
+{{#if hasErrors}}
+<p class="error-list">{{error}}
+</p>
+{{/if}}
+
 <div class="kanban_board">
     {{#each task_sections}}
     <div class=column id="{{section_name}}" ondrop="drop(event)" ondragover="allowDrop(event)">
