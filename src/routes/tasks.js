@@ -32,18 +32,6 @@ router.get('/:id/edit', async (req, res) => {
 	}
 });
 
-router.get('/:id/comments', async (req, res) => {
-	try {
-		const task_to_view = await tasks.getTask(req.params.id);
-
-		res.render('../src/views/board/task_comments', {
-			comments: task_to_view.comments
-		});
-	} catch (e) {
-		res.status(404).json({ message: `task ${req.params.id} not found` });
-	}
-});
-
 router.post('/create', async (req, res) => {
 	input = req.body;
 
@@ -98,7 +86,6 @@ router.delete('/:id', async (req, res) => {
 
 	try {
 		await tasks.deleteTask(req.params.id);
-		res.render('../src/views/board/index');
 	} catch (e) {
 		return res.status(404).render('../src/views/board/index', {
 			title: 'Error',
