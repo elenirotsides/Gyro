@@ -48,11 +48,13 @@ router.post('/create', async (req, res) => {
 
 	if (!input['taskName']) {
 		res.status(400).render('../src/views/partials/task_form', {
+			hasErrors: true,
 			error: 'You must name your task'
 		});
 	}
 	if (!input['description']) {
 		res.status(400).render('../src/views/partials/task_form', {
+			hasErrors: true,
 			error: 'You must include a description'
 		});
 	} /*
@@ -62,6 +64,8 @@ router.post('/create', async (req, res) => {
 		});
 	} */
 
+	tags = input['tags'].trim().split(',');
+
 	try {
 		await tasks.addTask(
 			input['taskName'],
@@ -69,10 +73,11 @@ router.post('/create', async (req, res) => {
 			req.session.user._id,
 			input['assigned_to'],
 			0,
-			[input['tags']]
+			tags
 		);
 	} catch (e) {
 		res.render('../src/views/partials/task_form', {
+			hasErrors: true,
 			error: 'Uh oh, something went wrong, please try again'
 		});
 	}
