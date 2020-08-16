@@ -2,13 +2,9 @@ const express = require('express');
 const router = express.Router();
 const tasks = require('../datalayer/tasks');
 const users = require('../datalayer/users');
-<<<<<<< HEAD
-const { getAllUsers } = require('../datalayer/users');
-=======
->>>>>>> 87073d5ea1c1fd4f873b8fedf7ce3ee18524accf
 
 router.get('/create', async (req, res) => {
-	let all_users = await getAllUsers();
+	let all_users = await users.getAllUsers();
 
 	res.render('../src/views/partials/task_form', {
 		layout: null,
@@ -20,11 +16,7 @@ router.get('/create', async (req, res) => {
 router.get('/:id/edit', async (req, res) => {
 	try {
 		const task_to_edit = await tasks.getTask(req.params.id);
-<<<<<<< HEAD
-		let all_users = await getAllUsers();
-=======
 		const all_users = await users.getAllUsers();
->>>>>>> 87073d5ea1c1fd4f873b8fedf7ce3ee18524accf
 
 		res.render('../src/views/partials/task_form', {
 			layout: null,
