@@ -89,7 +89,7 @@
         });
     });
 
-    $('.delete_task').click(function () {
+    $('.delete_task').click(function (event) {
         let task_id = this.id.slice(15) //account for 'delete_comment_' preceding ID
 
         event.preventDefault();
