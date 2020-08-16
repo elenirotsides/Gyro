@@ -43,15 +43,20 @@ router.post('/create', async (req, res) => {
 	input = req.body;
 
 	if (!input['taskName']) {
-		res.status(400).render('../src/views/board/task_form', {
+		res.status(400).render('../src/views/board/index', {
 			error: 'You must name your task'
 		});
 	}
 	if (!input['description']) {
-		res.status(400).render('../src/views.board/task_form', {
+		res.status(400).render('../src/views/board/index', {
 			error: 'You must include a description'
 		});
-	}
+	} /*
+	if (input['tags'].length < 1) {
+		res.status(400).render('../src/views/board/index', {
+			error: 'There must be at least one tag'
+		});
+	} */
 
 	try {
 		await tasks.addTask(
@@ -60,30 +65,30 @@ router.post('/create', async (req, res) => {
 			req.session.user._id,
 			input['assignedTo'],
 			0,
-			tags //fix this
+			[input['tags']]
 		);
 	} catch (e) {
-		res.render('/tasks/create', {
+		res.render('../src/views/board/index', {
 			error: 'Uh oh, something went wrong, please try again'
 		});
 	}
 });
 
 router.patch('/:id/edit', async (req, res) => {
-	//I think this is a patch, not a post
 	//TODO:
+	//is this supposed to be patch? idk
 	//Eleni
 });
 
 router.delete('/:id/remove', async (req, res) => {
-	// Waiting on Wes for db function
 	//TODO:
+	//is this supposed to be delete? idk
 	//Eleni
 });
 
 router.post('/:id/drag', async (req, res) => {
 	//TODO:
-	//Cassidy
+	//Cassidy, I think?
 });
 
 router.post('/:id/comments/create', async (req, res) => {
