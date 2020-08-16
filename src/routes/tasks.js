@@ -51,8 +51,7 @@ router.post('/create', async (req, res) => {
 		!input['description'].trim() ||
 		!input['tags'].trim()
 	) {
-		//don't know what page this should render...board/index gives me a blank page when...
-		//how do I access /board ?
+		//don't know what page this should render here
 		return res.status(400).render('../src/views/board/index', {
 			title: 'Error',
 			hasErrors: true,
@@ -72,7 +71,8 @@ router.post('/create', async (req, res) => {
 			tags
 		);
 	} catch (e) {
-		res.render('../src/views/partials/task_form', {
+		return res.render('../src/views/board/index', {
+			title: 'Error',
 			hasErrors: true,
 			error: 'Uh oh, something went wrong, please try again'
 		});
@@ -80,16 +80,44 @@ router.post('/create', async (req, res) => {
 	res.redirect('/board');
 });
 
-router.patch('/:id/edit', async (req, res) => {
+router.post('/:id/edit', async (req, res) => {
 	//TODO:
 	//is this supposed to be patch? idk
 	//Eleni
 });
 
-router.delete('/:id/remove', async (req, res) => {
+router.delete('/:id', async (req, res) => {
 	//TODO:
 	//is this supposed to be delete? idk
 	//Eleni
+
+	if (!req.params.id) {
+		return res.render('../src/views/board/index', {
+			title: 'Error',
+			hasErrors: true,
+			error: 'Uh oh, something went wrong, please try again'
+		});
+	}
+
+	try {
+		await tasks.getTask(req.params.id);
+	} catch (e) {
+		return res.status(404).render('../src/views/board/index', {
+			title: 'Error',
+			hasErrors: true,
+			error: 'Uh oh, something went wrong, please try again'
+		});
+	}
+
+	try {
+		await tasks.deleteTask(req.params.id);
+	} catch (e) {
+		return res.status(404).render('../src/views/board/index', {
+			title: 'Error',
+			hasErrors: true,
+			error: 'Uh oh, something went wrong, please try again'
+		});
+	}
 });
 
 router.post('/:id/drag', async (req, res) => {
@@ -98,6 +126,7 @@ router.post('/:id/drag', async (req, res) => {
 });
 
 router.post('/:id/comments/create', async (req, res) => {
+	//this is not done yet, I'm actively working on it
 	input = req.body;
 
 	if (!input['comment'].trim()) {
