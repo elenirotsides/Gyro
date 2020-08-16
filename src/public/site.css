@@ -117,3 +117,9 @@ textarea {
 #comments {
 	margin-left: 100px;
 }
+
+#comment {
+	color:red
+	background: gray
+	padding-box: 10px
+}

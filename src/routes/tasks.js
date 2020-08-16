@@ -1,25 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const tasks = require('../datalayer/tasks');
-var ObjectID = require('mongodb').ObjectID;
-const connection = require('../datalayer/mongoConnection');
+const users = require('../datalayer/users');
+const { getAllUsers } = require('../datalayer/users');
 
 router.get('/create', async (req, res) => {
+	let all_users = await getAllUsers();
+
 	res.render('../src/views/partials/task_form', {
 		layout: null,
-		newTask: true
+		newTask: true,
+		users: all_users
 	});
 });
 
 router.get('/:id/edit', async (req, res) => {
 	try {
 		const task_to_edit = await tasks.getTask(req.params.id);
+		let all_users = await getAllUsers();
 
 		res.render('../src/views/partials/task_form', {
 			layout: null,
 			newTask: false,
 			task_name: task_to_edit.taskName,
 			tags: task_to_edit.tags,
+			users: all_users,
 			comments: task_to_edit.comments
 		});
 	} catch (e) {
