@@ -53,6 +53,13 @@ app.use('/register', (req, res, next) => {
 		next();
 	}
 });
+app.use('/board', (req, res, next) => {
+	if (!req.session.user) {
+		return res.status(403).redirect('/login');
+	} else {
+		next();
+	}
+});
 
 configRoutes(app);
 
