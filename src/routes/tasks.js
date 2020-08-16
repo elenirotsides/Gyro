@@ -23,6 +23,7 @@ router.get('/:id/edit', async (req, res) => {
 			newTask: false,
 			task_name: task_to_edit.taskName,
 			tags: task_to_edit.tags,
+			description: task_to_edit.description,
 			users: all_users,
 			comments: task_to_edit.comments
 		});
