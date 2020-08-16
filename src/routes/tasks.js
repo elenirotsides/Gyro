@@ -43,12 +43,12 @@ router.post('/create', async (req, res) => {
 	input = req.body;
 
 	if (!input['taskName']) {
-		res.status(400).render('../src/views/board/index', {
+		res.status(400).render('../src/views/partials/task_form', {
 			error: 'You must name your task'
 		});
 	}
 	if (!input['description']) {
-		res.status(400).render('../src/views/board/index', {
+		res.status(400).render('../src/views/partials/task_form', {
 			error: 'You must include a description'
 		});
 	} /*
@@ -63,15 +63,16 @@ router.post('/create', async (req, res) => {
 			input['taskName'],
 			input['description'],
 			req.session.user._id,
-			input['assignedTo'],
+			input['assigned_to'],
 			0,
 			[input['tags']]
 		);
 	} catch (e) {
-		res.render('../src/views/board/index', {
+		res.render('../src/views/partials/task_form', {
 			error: 'Uh oh, something went wrong, please try again'
 		});
 	}
+	res.redirect('/board');
 });
 
 router.patch('/:id/edit', async (req, res) => {
@@ -94,11 +95,6 @@ router.post('/:id/drag', async (req, res) => {
 router.post('/:id/comments/create', async (req, res) => {
 	input = req.body;
 
-	if (!input['comment']) {
-		res.status(400).render('../src/views/board/', {
-			error: 'You must write a comment to submit a comment'
-		});
-	}
 	if (!input['comment'].trim()) {
 		res.status(400).render('../src/views/board/', {
 			hasErrors: true,
