@@ -53,15 +53,13 @@ router.post('/create', async (req, res) => {
 		});
 	}
 
-	createdBy = req.session.user.firstName + ' ' + req.session.user.lastName;
-
 	try {
 		await tasks.addTask(
 			input['taskName'],
 			input['description'],
-			createdBy,
+			req.session.user._id,
 			input['assignedTo'],
-			status, //fix this
+			0,
 			tags //fix this
 		);
 	} catch (e) {

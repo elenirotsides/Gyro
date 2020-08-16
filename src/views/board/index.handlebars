@@ -6,8 +6,7 @@
         <H2 class="title">{{section_name}}</H2>
         <div class="drop-target" task-stage="{{task_stage}}">
             {{#each task_list}}
-            <div class="tickets" id="{{_id}}" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true"
-                ondragstart="drag(event)" width="336" height="69">
+            <div class="tickets" id="{{_id}}" draggable="true" ondragstart="drag(event)" width="336" height="69">
                 {{taskName}}
                 {{#each tags}}
                 <button class="tag">
@@ -29,19 +28,22 @@
     {{/each}}
 </div>
 
+
 <form id="add_task">
     <input type="submit" value="Add a Task">
 </form>
 
-<p id="add_task-area"></p>
+<div id="task_form-area"></div>
 
 <script>
-    let todoArea = $('#add_task-area');
+    let taskFormArea = $('#task_form-area');
 
     $("#add_task").click(function () {
         event.preventDefault();
+        addTaskArea.empty()
 
-        var requestConfig = {
+
+        let requestConfig = {
             method: 'GET',
             url: '/tasks/create',
             contentType: 'application/json',
@@ -50,16 +52,37 @@
         }
         $.ajax(requestConfig).then(function (responseMessage) {
             console.log(responseMessage);
-            var newElement = $(responseMessage);
-            var currentLink = $(this);
-            var currentId = currentLink.data('id');
-            /*
-                        var requestConfig = {
-                            method: 'POST',
-                            url: '/api/todo/complete/' + currentId
-                        };*/
+            let newElement = $(responseMessage);
+            let currentLink = $(this);
+            let currentId = currentLink.data('id');
 
-            todoArea.append(newElement);
+            taskFormArea.append(newElement);
         });
     })
+
+    $('#Task_Submit').submit(function () {
+        $('#task_form-area').hide();
+    });
+
+    $('.tickets').click(function () {
+        event.preventDefault();
+        taskFormArea.empty()
+
+
+        let requestConfig = {
+            method: 'GET',
+            url: `/tasks/${this.id}/edit`,
+            contentType: 'application/json',
+            data: JSON.stringify({
+            })
+        }
+        $.ajax(requestConfig).then(function (responseMessage) {
+            console.log(responseMessage);
+            let newElement = $(responseMessage);
+            let currentLink = $(this);
+            let currentId = currentLink.data('id');
+
+            taskFormArea.append(newElement);
+        });
+    });
 </script>
