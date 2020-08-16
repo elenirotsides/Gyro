@@ -4,9 +4,12 @@ const tasks = require('../datalayer/tasks');
 const users = require('../datalayer/users');
 
 router.get('/create', async (req, res) => {
+	let all_users = await users.getAllUsers();
+
 	res.render('../src/views/partials/task_form', {
 		layout: null,
-		newTask: true
+		newTask: true,
+		users: all_users
 	});
 });
 
@@ -20,6 +23,7 @@ router.get('/:id/edit', async (req, res) => {
 			newTask: false,
 			task_name: task_to_edit.taskName,
 			tags: task_to_edit.tags,
+			users: all_users,
 			comments: task_to_edit.comments
 		});
 	} catch (e) {

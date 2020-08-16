@@ -7,17 +7,15 @@
         <div class="drop-target" task-stage="{{task_stage}}">
             {{#each task_list}}
             <div class="tickets" id="{{_id}}" draggable="true" ondragstart="drag(event)" width="336" height="69">
-                {{taskName}}
-                {{#each tags}}
-                <button class="tag">
-                    {{this}}
-                </button>
-                {{/each}}
+                {{taskName}}<br>
+                <span>{{#each tags}}
+                    <button class="tag">
+                        {{this}}
+                    </button>
+                    {{/each}}</span>
                 <br>
-                {{createdBy}}
-                <form action="/tasks/{{_id}}/comments" method="GET" id="view_comment_{{_id}}">
-                    <input type="submit" value="View Comments">
-                </form>
+                <span>Created By:{{createdBy}}</span><br>
+                <span>Assigned To:{{assignedTo}}</span>
                 <form action="/tasks/{{_id}}/remove" method="DELETE" id="delete_comment_{{_id}}">
                     <input type="submit" value="Delete">
                 </form>
