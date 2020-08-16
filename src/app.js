@@ -60,6 +60,13 @@ app.use('/board', (req, res, next) => {
 		next();
 	}
 });
+app.use('/tasks/create', (req, res, next) => {
+	if (!req.session.user) {
+		return res.status(403).redirect('/login');
+	} else {
+		next();
+	}
+});
 
 configRoutes(app);
 
