@@ -88,10 +88,6 @@ router.post('/:id/edit', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-	//TODO:
-	//is this supposed to be delete? idk
-	//Eleni
-
 	if (!req.params.id) {
 		return res.render('../src/views/board/index', {
 			title: 'Error',
@@ -101,17 +97,8 @@ router.delete('/:id', async (req, res) => {
 	}
 
 	try {
-		await tasks.getTask(req.params.id);
-	} catch (e) {
-		return res.status(404).render('../src/views/board/index', {
-			title: 'Error',
-			hasErrors: true,
-			error: 'Uh oh, something went wrong, please try again'
-		});
-	}
-
-	try {
 		await tasks.deleteTask(req.params.id);
+		res.render('../src/views/board/index');
 	} catch (e) {
 		return res.status(404).render('../src/views/board/index', {
 			title: 'Error',

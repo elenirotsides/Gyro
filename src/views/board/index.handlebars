@@ -21,7 +21,7 @@
                 <br>
                 <span>Created By:{{createdBy}}</span><br>
                 <span>Assigned To:{{assignedTo}}</span>
-                <form action="/tasks/{{_id}}/remove" method="DELETE" id="delete_comment_{{_id}}">
+                <form class="delete_task" id="delete_comment_{{_id}}">
                     <input type="submit" value="Delete">
                 </form>
             </div>
@@ -88,4 +88,28 @@
             taskFormArea.append(newElement);
         });
     });
+
+    $('.delete_task').click(function () {
+        let task_id = this.id.slice(15) //account for 'delete_comment_' preceding ID
+
+        event.preventDefault();
+        taskFormArea.empty()
+
+        let requestConfig = {
+            method: 'DELETE',
+            url: `/tasks/${task_id}`,
+            contentType: 'application/json',
+            data: JSON.stringify({
+            })
+        }
+
+        $.ajax(requestConfig).then(function (responseMessage) {
+            console.log(responseMessage);
+            let newElement = $(responseMessage);
+            let currentLink = $(this);
+            let currentId = currentLink.data('id');
+        });
+
+        location.reload(true)
+    })
 </script>
