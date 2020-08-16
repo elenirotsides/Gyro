@@ -46,23 +46,19 @@ router.get('/:id/comments', async (req, res) => {
 router.post('/create', async (req, res) => {
 	input = req.body;
 
-	if (!input['taskName']) {
-		res.status(400).render('../src/views/partials/task_form', {
+	if (
+		!input['taskName'].trim() ||
+		!input['description'].trim() ||
+		!input['tags'].trim()
+	) {
+		//don't know what page this should render...board/index gives me a blank page when...
+		//how do I access /board ?
+		return res.status(400).render('../src/views/board/index', {
+			title: 'Error',
 			hasErrors: true,
-			error: 'You must name your task'
+			error: 'Input cannot be blank'
 		});
 	}
-	if (!input['description']) {
-		res.status(400).render('../src/views/partials/task_form', {
-			hasErrors: true,
-			error: 'You must include a description'
-		});
-	} /*
-	if (input['tags'].length < 1) {
-		res.status(400).render('../src/views/board/index', {
-			error: 'There must be at least one tag'
-		});
-	} */
 
 	tags = input['tags'].trim().split(',');
 
