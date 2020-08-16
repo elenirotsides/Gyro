@@ -19,7 +19,8 @@ router.get('/:id/edit', async (req, res) => {
 			layout: null,
 			newTask: false,
 			task_name: task_to_edit.taskName,
-			tags: task_to_edit.tags
+			tags: task_to_edit.tags,
+			comments: task_to_edit.comments
 		});
 	} catch (e) {
 		res.status(404).json({ message: `task ${req.params.id} not found` });

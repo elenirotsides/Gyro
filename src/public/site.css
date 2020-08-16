@@ -98,8 +98,22 @@ img {
 	min-height: 100px;
 }
 
-.tag-input, textarea {
+.tag-input,
+textarea {
 	width: 500px;
 	display: block;
 	resize: none;
+}
+
+#taskBar {
+	display: flex;
+	text-align: left;
+}
+
+#taskForm {
+	justify-content: left;
+}
+
+#comments {
+	margin-left: 100px;
 }

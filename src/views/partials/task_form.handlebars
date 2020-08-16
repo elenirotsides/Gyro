@@ -1,31 +1,46 @@
 {{#if hasErrors}}
-    <p class="error-list">{{error}}</p>
+<p class="error-list">{{error}}</p>
 {{/if}}
+<div id='taskBar'>
+    <div id='taskForm'>
+        {{#if newTask}}
+        <H1>Create a new Task</H1>
+        {{/if}}
 
-{{#if newTask}}
-    <H1>Create a new Task</H1>
-{{else}}
-    <H1>Edit a Task</H1>
-{{/if}}
+        <form action="/tasks/create" method="POST" id="add_task_form">
+            <label>Task Name</label>
+            <br>
+            <input required type="text" name="taskName" id="taskName" value={{task_name}}>
+            <br>
+            <label>Tags</label>
+            <input required type="text" name="tags" id="tags" class="tag-input" value="{{tags}}">
+            <label>Description</label>
+            <br>
+            <textarea required type="text" name="decription" id="decription" value={{description}}></textarea>
+            <label>Assigned To</label>
+            <select required id="assigned_to" name="assigned_to">
+                <option value="noone">No One</option>
+                {{#each users}}
+                <option value="{{email}}">{{email}}</option>
+                {{/each}}
+            </select>
+            <br>
+            <input type="hidden" name="status" id="status" value="0">
+            <input type="submit" value="Submit" id="Task_Submit">
+        </form>
+    </div>
 
-<form action="/tasks/create" method="POST" id="add_task_form">
-    <label>Task Name</label>
-    <br>
-    <input required type="text" name="taskName" id="taskName" value={{task_name}}>
-    <br>
-    <label>Tags</label>
-    <input required type="text" name="tags" id="tags" class="tag-input" value="{{tags}}">
-    <label>Description</label>
-    <br>
-    <textarea required type="text" name="comments" id="comments" value={{comments}}></textarea>
-    <label>Assigned To</label>
-    <select required id="assigned_to" name="assigned_to">
-        <option value="noone">No One</option>
-        {{#each users}}
-        <option value="{{email}}">{{email}}</option>
+    <div id='comments'>
+        {{#unless newTask}}
+
+        {{#each comments}}
+        <span class='comment'>{{comment}} [by {{name}}]</span>
         {{/each}}
-    </select>
-    <br>
-    <input type="hidden" name="status" id="status" value="0">
-    <input type="submit" value="Submit">
-</form>
+
+        <form action="/{{_id}}/comments/create" method="POST" id="add_task_form">
+            <textarea required type="text" id="new_comment" placeholder="Add a comment"></textarea>
+            <input type="submit" value="Add new comment">
+        </form>
+        {{/unless}}
+    </div>
+</div>
