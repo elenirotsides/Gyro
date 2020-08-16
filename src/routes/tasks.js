@@ -37,32 +37,32 @@ router.get('/:id/comments', async (req, res) => {
 
 router.post('/create', async (req, res) => {
 	input = req.body;
-	//fix this
+
 	if (!input['taskName']) {
-		res.status(400).render('../src/views/board/add_task', {
+		res.status(400).render('../src/views/board/task_form', {
 			error: 'You must name your task'
 		});
 	}
 	if (!input['description']) {
-		res.status(400).render('../src/views.board/add_task', {
+		res.status(400).render('../src/views.board/task_form', {
 			error: 'You must include a description'
 		});
 	}
-	//assignedTo
-	//console.log the below to test the output
+
 	createdBy = req.session.user.firstName + ' ' + req.session.user.lastName;
-	//what kind of data did Wes intend his createdBy field to have? full name? id?
+
 	try {
 		await tasks.addTask(
 			input['taskName'],
 			input['description'],
 			createdBy,
-			blah,
-			input['tags']
+			input['assignedTo'],
+			status, //fix this
+			tags //fix this
 		);
 	} catch (e) {
 		res.render('/tasks/create', {
-			error: 'Uh oh, something went wrong, pleease try again'
+			error: 'Uh oh, something went wrong, please try again'
 		});
 	}
 });
@@ -88,12 +88,12 @@ router.post('/:id/comments/create', async (req, res) => {
 	input = req.body;
 
 	if (!input['comment']) {
-		res.status(400).render('../src/views/board/add_task', {
+		res.status(400).render('../src/views/board/', {
 			error: 'You must write a comment to submit a comment'
 		});
 	}
 	if (!input['comment'].trim()) {
-		res.status(400).render('../src/views/board/add_task', {
+		res.status(400).render('../src/views/board/', {
 			hasErrors: true,
 			error: "Comment can't be blank!"
 		});
