@@ -5,14 +5,18 @@ var ObjectID = require('mongodb').ObjectID;
 const connection = require('../datalayer/mongoConnection');
 
 router.get('/create', async (req, res) => {
-	res.render('../src/views/board/task_form', { newTask: true });
+	res.render('../src/views/partials/task_form', {
+		layout: null,
+		newTask: true
+	});
 });
 
 router.get('/:id/edit', async (req, res) => {
 	try {
 		const task_to_edit = await tasks.getTask(req.params.id);
 
-		res.render('../src/views/board/task_form', {
+		res.render('../src/views/partials/task_form', {
+			layout: null,
 			newTask: false,
 			task_name: task_to_edit.taskName,
 			tags: task_to_edit.tags

@@ -2,32 +2,64 @@
 
 <div class="kanban_board">
     {{#each task_sections}}
-        <div class=column id="{{section_name}}" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <H2 class="title">{{section_name}}</H2>
-            <div class="drop-target" task-stage="{{task_stage}}">
-                {{#each task_list}}
-                <div class="tickets" id="{{_id}}" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true" ondragstart="drag(event)" width="336" height="69">
-                    {{taskName}}
-                    {{#each tags}}
-                    <button class="tag">
-                        {{this}}
-                    </button>
-                    {{/each}}
-                    <br>
-                    {{createdBy}}
-                    <form action="/tasks/{{_id}}/comments" method="GET" id="view_comment_{{_id}}">
-                        <input type="submit" value="View Comments">
-                    </form>
-                    <form action="/tasks/{{_id}}/remove" method="DELETE" id="delete_comment_{{_id}}">
-                        <input type="submit" value="Delete">
-                    </form>
-                </div>
+    <div class=column id="{{section_name}}" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <H2 class="title">{{section_name}}</H2>
+        <div class="drop-target" task-stage="{{task_stage}}">
+            {{#each task_list}}
+            <div class="tickets" id="{{_id}}" onclick="location.href='/tasks/{{_id}}/edit';" draggable="true"
+                ondragstart="drag(event)" width="336" height="69">
+                {{taskName}}
+                {{#each tags}}
+                <button class="tag">
+                    {{this}}
+                </button>
                 {{/each}}
+                <br>
+                {{createdBy}}
+                <form action="/tasks/{{_id}}/comments" method="GET" id="view_comment_{{_id}}">
+                    <input type="submit" value="View Comments">
+                </form>
+                <form action="/tasks/{{_id}}/remove" method="DELETE" id="delete_comment_{{_id}}">
+                    <input type="submit" value="Delete">
+                </form>
             </div>
+            {{/each}}
         </div>
+    </div>
     {{/each}}
 </div>
 
-<form action="/tasks/create" method="GET" id="add_task">
+<form id="add_task">
     <input type="submit" value="Add a Task">
 </form>
+
+<p id="add_task-area"></p>
+
+<script>
+    let todoArea = $('#add_task-area');
+
+    $("#add_task").click(function () {
+        event.preventDefault();
+
+        var requestConfig = {
+            method: 'GET',
+            url: '/tasks/create',
+            contentType: 'application/json',
+            data: JSON.stringify({
+            })
+        }
+        $.ajax(requestConfig).then(function (responseMessage) {
+            console.log(responseMessage);
+            var newElement = $(responseMessage);
+            var currentLink = $(this);
+            var currentId = currentLink.data('id');
+            /*
+                        var requestConfig = {
+                            method: 'POST',
+                            url: '/api/todo/complete/' + currentId
+                        };*/
+
+            todoArea.append(newElement);
+        });
+    })
+</script>

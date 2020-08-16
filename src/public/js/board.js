@@ -38,3 +38,28 @@ function drop(ev) {
 		}
 	});
 }
+
+$('#add_task').click(function () {
+	let addTaskArea = $('#add_task-area');
+
+	event.preventDefault();
+
+	let requestConfig = {
+		method: 'GET',
+		url: '/tasks/create',
+		contentType: 'application/json',
+		data: JSON.stringify({})
+	};
+	$.ajax(requestConfig).then(function (responseMessage) {
+		console.log(responseMessage);
+		var newElement = $(responseMessage);
+		var currentLink = $(this);
+		var currentId = currentLink.data('id');
+
+		addTaskArea.append(newElement);
+	});
+});
+
+$('#Task_Submit').submit(function () {
+	$('#add_task-area').hide();
+});
