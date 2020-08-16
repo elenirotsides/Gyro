@@ -21,7 +21,7 @@
             <select required id="assigned_to" name="assigned_to">
                 <option value="noone">No One</option>
                 {{#each users}}
-                <option value="{{email}}">{{email}}</option>
+                <option value="{{firstName}} {{lastName}}">{{firstName}} {{lastName}}</option>
                 {{/each}}
             </select>
             <br>
