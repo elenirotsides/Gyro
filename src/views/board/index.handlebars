@@ -29,19 +29,22 @@
     {{/each}}
 </div>
 
+
 <form id="add_task">
     <input type="submit" value="Add a Task">
 </form>
 
-<p id="add_task-area"></p>
+<div id="add_task-area"></div>
 
 <script>
-    let todoArea = $('#add_task-area');
+    let addTaskArea = $('#add_task-area');
 
     $("#add_task").click(function () {
         event.preventDefault();
+        addTaskArea.empty()
 
-        var requestConfig = {
+
+        let requestConfig = {
             method: 'GET',
             url: '/tasks/create',
             contentType: 'application/json',
@@ -50,16 +53,15 @@
         }
         $.ajax(requestConfig).then(function (responseMessage) {
             console.log(responseMessage);
-            var newElement = $(responseMessage);
-            var currentLink = $(this);
-            var currentId = currentLink.data('id');
-            /*
-                        var requestConfig = {
-                            method: 'POST',
-                            url: '/api/todo/complete/' + currentId
-                        };*/
+            let newElement = $(responseMessage);
+            let currentLink = $(this);
+            let currentId = currentLink.data('id');
 
-            todoArea.append(newElement);
+            addTaskArea.append(newElement);
         });
     })
+
+    $('#Task_Submit').submit(function () {
+        $('#add_task-area').hide();
+    });
 </script>
