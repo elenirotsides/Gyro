@@ -33,6 +33,9 @@ router.get('/:id/edit', async (req, res) => {
 });
 
 router.post('/create', async (req, res) => {
+	//this route is done
+	//I just don't know how to fix the page its rendering when there's an error,
+	//this is a known bug that needs to be resolved
 	input = req.body;
 
 	if (
@@ -70,12 +73,12 @@ router.post('/create', async (req, res) => {
 });
 
 router.post('/:id/edit', async (req, res) => {
-	//TODO:
-	//is this supposed to be patch? idk
-	//Eleni
+	//TODO
 });
 
 router.delete('/:id', async (req, res) => {
+	//done, code is functioning but there are bugs associated when the delete
+	//button is triggered
 	if (!req.params.id) {
 		return res.render('../src/views/board/index', {
 			title: 'Error',
@@ -102,22 +105,31 @@ router.post('/:id/drag', async (req, res) => {
 
 router.post('/:id/comments/create', async (req, res) => {
 	//this is not done yet, I'm actively working on it
+	//I don't know if this works yet, when I try and add the comment, the site breaks
+	//is it just not being triggered?
+	//I also don't really know which pages should be rendered if there is an error
 	input = req.body;
 
-	if (!input['comment'].trim()) {
-		res.status(400).render('../src/views/board/', {
+	if (!input['comment'].trim() || !input['comment']) {
+		return res.status(400).render('../src/views/board/index', {
+			title: 'Error',
 			hasErrors: true,
 			error: "Comment can't be blank!"
 		});
 	}
+
 	try {
-		await tasks.addComment(id, req.session.user, input['comment']);
+		await tasks.addComment(
+			req.params.id,
+			req.session.user,
+			input['comment']
+		);
 	} catch (e) {
-		res.render('/:id/comments/create', {
+		res.render('..src/views/board/index', {
+			title: 'Error',
 			hasErrors: true,
 			error: 'Uh oh, something went wrong! Please try again'
 		});
-		//I know the page I'm rendering is wrong here, I will fix that
 	}
 });
 module.exports = router;
