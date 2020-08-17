@@ -7,21 +7,25 @@
 
 <div class="kanban_board">
     {{#each task_sections}}
-    <div class=column id="{{section_name}}" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div class="column" id="{{section_name}}">
         <H2 class="title">{{section_name}}</H2>
         <div class="drop-target" task-stage="{{task_stage}}">
             {{#each task_list}}
-            <div class="tickets" id="{{_id}}" draggable="true" ondragstart="drag(event)" width="336" height="69">
+            <div class="tickets" id="{{_id}}" draggable="true" width="336" height="69">
                 {{taskName}}<br>
                 <span>{{#each tags}}
                     <button class="tag">
                         {{this}}
                     </button>
-                    {{/each}}</span>
+                    {{/each}}
+                </span>
                 <br>
-                <span>Created By:{{createdBy}}</span><br>
-                <span>Assigned To:{{assignedTo}}</span>
-                <form class="delete_task" id="delete_comment_{{_id}}">
+                <span>Creator: {{createdBy}}</span><br>
+                <span>Assigned: {{assignedTo}}</span>
+                <form>
+                    <input class="edit_task" type="submit" value="Edit" task_id="{{_id}}">
+                </form>
+                <form action="/tasks/{{_id}}/delete" method="POST">
                     <input type="submit" value="Delete">
                 </form>
             </div>
@@ -31,10 +35,13 @@
     {{/each}}
 </div>
 
-
 <form id="add_task">
     <input type="submit" value="Add a Task">
 </form>
 
-<div id="task_form-area"></div>
+<div id="task_form-area">
+    
+</div>
 
+
+<script type="text/javascript" src="/public/js/board_jq.js"></script>

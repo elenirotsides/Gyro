@@ -15,17 +15,49 @@ router.get('/create', async (req, res) => {
 
 router.get('/:id/edit', async (req, res) => {
 	try {
-		const task_to_edit = await tasks.getTask(req.params.id);
+		const task = await tasks.getTask(req.params.id);
 		const all_users = await users.getAllUsers();
+		let comments = await Promise.all(
+			task.comments.map(async (c) => {
+				let author = await users.getUser(c.user);
+				return {
+					comment: c.comment,
+					user: author.firstName + ' ' + author.lastName
+				};
+			})
+		);
+		task.comments = comments;
+		task.createdBy = String(task.createdBy);
 
-		res.render('../src/views/partials/task_form', {
+		res.status(200).render('../src/views/partials/task_form', {
 			layout: null,
 			newTask: false,
-			task_name: task_to_edit.taskName,
-			tags: task_to_edit.tags,
-			description: task_to_edit.description,
 			users: all_users,
-			comments: task_to_edit.comments
+			task: task
+		});
+	} catch (e) {
+		res.status(404).json({ message: `task ${req.params.id} not found` });
+	}
+});
+
+router.get('/:id/view', async (req, res) => {
+	try {
+		const task = await tasks.getTask(req.params.id);
+		let comments = await Promise.all(
+			task.comments.map(async (c) => {
+				let author = await users.getUser(c.user);
+				return {
+					comment: c.comment,
+					user: author.firstName + ' ' + author.lastName
+				};
+			})
+		);
+		task.comments = comments;
+		task.createdBy = String(task.createdBy);
+
+		res.status(200).render('../src/views/partials/task_view', {
+			layout: null,
+			task: task
 		});
 	} catch (e) {
 		res.status(404).json({ message: `task ${req.params.id} not found` });
@@ -73,12 +105,23 @@ router.post('/create', async (req, res) => {
 });
 
 router.post('/:id/edit', async (req, res) => {
-	//TODO
+	let id = req.params.id;
+	let name = req.body['taskName'];
+	let tags = req.body['tags'];
+	let description = req.body['description'];
+	let assigned_to = req.body['assigned_to'];
+
+	await tasks.rawUpdateTask(id, {
+		taskName: name,
+		tags: tags.split(',').map((s) => s.trim()),
+		description: description,
+		assignedTo: assigned_to
+	});
+
+	res.redirect('/board');
 });
 
-router.delete('/:id', async (req, res) => {
-	//done, code is functioning but there are bugs associated when the delete
-	//button is triggered
+router.post('/:id/delete', async (req, res) => {
 	if (!req.params.id) {
 		return res.render('../src/views/board/index', {
 			title: 'Error',
@@ -96,21 +139,35 @@ router.delete('/:id', async (req, res) => {
 			error: 'Uh oh, something went wrong, please try again'
 		});
 	}
+
+	res.status(200).redirect('/');
 });
 
 router.post('/:id/drag', async (req, res) => {
-	//TODO:
-	//Cassidy, I think?
+	let id = req.params.id;
+	let stage = req.body['stage'];
+
+	if (!id || !stage) {
+		return res.status(400).send();
+	}
+
+	try {
+		await tasks.rawUpdateTask(id, { status: Number(stage) });
+	} catch (e) {
+		console.log(e);
+		return res.status(400).send();
+	}
+
+	return res.status(200).send();
 });
 
 router.post('/:id/comments/create', async (req, res) => {
-	//this is not done yet, I'm actively working on it
-	//I don't know if this works yet, when I try and add the comment, the site breaks
-	//is it just not being triggered?
-	//I also don't really know which pages should be rendered if there is an error
-	input = req.body;
+	console.log('POSTED');
 
-	if (!input['comment'].trim() || !input['comment']) {
+	let id = req.params.id;
+	let comment = req.body['comment'].trim();
+
+	if (!comment) {
 		return res.status(400).render('../src/views/board/index', {
 			title: 'Error',
 			hasErrors: true,
@@ -119,17 +176,16 @@ router.post('/:id/comments/create', async (req, res) => {
 	}
 
 	try {
-		await tasks.addComment(
-			req.params.id,
-			req.session.user,
-			input['comment']
-		);
+		await tasks.addComment(id, req.session.user._id, comment);
 	} catch (e) {
-		res.render('..src/views/board/index', {
+		console.log(e);
+		return res.render('..src/views/board/index', {
 			title: 'Error',
 			hasErrors: true,
 			error: 'Uh oh, something went wrong! Please try again'
 		});
 	}
+
+	return res.status(200).redirect('/');
 });
 module.exports = router;

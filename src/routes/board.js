@@ -9,9 +9,19 @@ router.get('/', async (req, res) => {
 	all_tasks = await Promise.all(
 		all_tasks.map(async (task) => {
 			let user = await users.getUser(task.createdBy);
+
+			// assignedTo should be a user object. If we can't find the user then it is assigned to nobody.
+			let assignedTo = null;
+			try {
+				assignedTo = await users.getUser(task.assignedTo);
+			} catch (e) {}
+
 			return {
 				...task,
-				createdBy: user.firstName + ' ' + user.lastName
+				createdBy: user.firstName + ' ' + user.lastName,
+				assignedTo: assignedTo
+					? assignedTo.firstName + ' ' + assignedTo.lastName
+					: 'Nobody'
 			};
 		})
 	);

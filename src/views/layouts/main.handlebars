@@ -16,7 +16,7 @@
 
 <body>
     <header id="gyro_header">
-        <img src="/public/logo.png" alt="Gyro Logo">
+        <img src="/public/logo.png" alt="Gyro Logo"  class='logoimg'>
         <span class="header_text">Gyro</span>
         {{#unless hideLogout}}
         <form action="/logout" method="GET" id="logout_button">
@@ -27,8 +27,6 @@
     <main>
         {{{body}}}
     </main>
-
-    <script src="/public/js/board_jq.js"></script>
 </body>
 
 </html>

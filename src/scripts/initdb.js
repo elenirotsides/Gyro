@@ -35,7 +35,7 @@ const main = async () => {
 	newTask = await tasks.setTaskTags(String(newTask._id), ['new', 'tags']);
 	newTask = await tasks.addComment(
 		String(newTask._id),
-		'Wes',
+		String(userWes._id),
 		'this is a comment'
 	);
 
@@ -75,8 +75,6 @@ const main = async () => {
 		1,
 		['tag1', 'tag3']
 	);
-
-	await tasks.deleteTask(String(newTask._id));
 
 	newTask = await tasks.addTask(
 		'(O__o)',

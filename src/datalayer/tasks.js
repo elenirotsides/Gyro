@@ -15,7 +15,7 @@ const addTask = async (
 	verify.str(createdBy);
 	verify.str(assignedTo);
 	verify.num(status);
-	verify.nonzeroArr(tags);
+	verify.arr(tags);
 
 	let collection = await tasks();
 
@@ -124,47 +124,47 @@ const updateTask = async (
 	status,
 	tags
 ) => {
-	await _updateTask(id, {
+	await rawUpdateTask(id, {
 		taskName: taskName,
 		description: description,
 		createdBy: createdBy,
 		assignedTo: assignedTo,
 		status: status,
-		tags: tags.map((tag) => tag.toLowerCase())
+		tags: tags ? tags.map((tag) => tag.toLowerCase()) : null
 	});
 };
 
 const setTaskTags = async (id, tags) => {
 	verify.nonzeroArr(tags);
-	await _updateTask(id, { tags: tags });
+	await rawUpdateTask(id, { tags: tags });
 	return await getTask(id);
 };
 
 const setTaskName = async (id, name) => {
 	verify.str(name);
-	await _updateTask(id, { name: name });
+	await rawUpdateTask(id, { name: name });
 	return await getTask(id);
 };
 
 const setTaskStatus = async (id, status) => {
 	verify.num(status);
-	await _updateTask(id, { status: status });
+	await rawUpdateTask(id, { status: status });
 	return await getTask(id);
 };
 
-const addComment = async (id, name, comment) => {
-	verify.str(name);
+const addComment = async (id, userID, comment) => {
+	verify.str(userID);
 	verify.str(comment);
 
 	let comments = (await getTask(id)).comments;
-	comments = comments.concat([{ name: name, comment: comment }]);
+	comments = comments.concat([{ user: userID, comment: comment }]);
 
-	await _updateTask(id, { comments: comments });
+	await rawUpdateTask(id, { comments: comments });
 	return await getTask(id);
 };
 
 // private utility for this file
-const _updateTask = async (id, changes) => {
+const rawUpdateTask = async (id, changes) => {
 	let collection = await tasks();
 
 	let now = new Date();
@@ -195,5 +195,6 @@ module.exports = {
 	setTaskName,
 	setTaskTags,
 	setTaskStatus,
-	addComment
+	addComment,
+	rawUpdateTask
 };

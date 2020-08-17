@@ -1,0 +1,52 @@
+<div id='task-info'>
+    <table>
+        <tr>
+            <td>Title: </td>
+            <td>{{task.taskName}}</td>
+        </tr>
+        <tr>
+            <td>Tags: </td>
+            <td>{{task.tags}}</td>
+        </tr>
+        <tr>
+            <td>Description: </td>
+            <td>{{task.description}}</td>
+        </tr>
+        <tr>
+            <td>Author: </td>
+            <td>{{task.createdBy}}</td>
+        </tr>
+        <tr>
+            <td>Assigned: </td>
+            <td>{{task.assignedTo}}</td>
+        </tr>
+        <tr>
+            <td>Status: </td>
+            <td>{{task.status}}</td>
+        </tr>
+        <tr>
+            <td>Date Posted: </td>
+            <td>{{task.postedDate}}</td>
+        </tr>
+        <tr>
+            <td>Last Update: </td>
+            <td>{{task.lastUpdated}}</td>
+        </tr>
+    </table>
+</div>
+<br>
+<div id='comments'>
+    <table>
+        {{#each task.comments}}
+            <tr>
+                <td>[{{user}}]</td>
+                <td>{{comment}}</td>
+            </tr>
+        {{/each}}
+    </table>
+
+    <form action="/tasks/{{task._id}}/comments/create" method="POST" id="comment_form">
+        <textarea required type="text" name="comment" id="comment" placeholder="Add a comment"></textarea>
+        <input type="submit" value="Add new comment">
+    </form>
+</div>

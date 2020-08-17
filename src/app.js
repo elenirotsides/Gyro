@@ -10,8 +10,6 @@ const xss = require('xss');
 const xssProtectionMiddleware = (req, res, next) => {
 	let keys = Object.keys(req.body);
 	keys.forEach((key) => {
-		// Uncomment to show each translation that occurs, per request
-		// console.log(key + ': ' + req.body[key] + ' => ' + xss(req.body[key]));
 		req.body[key] = xss(req.body[key]);
 	});
 	next();
@@ -23,7 +21,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.engine(
 	'handlebars',
-	exphbs({ layoutsDir: 'src/views/layouts', defaultLayout: 'main' })
+	exphbs({
+		helpers: {
+			ifeq: (arg1, arg2, options) => {
+				return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+			}
+		},
+		layoutsDir: 'src/views/layouts',
+		defaultLayout: 'main'
+	})
 );
 app.set('view engine', 'handlebars');
 
