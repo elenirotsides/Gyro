@@ -4,7 +4,23 @@ const tasks = require('../datalayer/tasks');
 const users = require('../datalayer/users');
 
 router.get('/', async (req, res) => {
-	let all_tasks = await tasks.getAllTasks();
+	let query = '';
+	let all_tasks = [];
+	try {
+		query = req.query['query'];
+	} catch (e) {}
+
+	if (query !== undefined && query.trim() !== '') {
+		try {
+			all_tasks = all_tasks.concat(
+				await tasks.filterTasksByTagsAndName(query)
+			);
+		} catch (e) {
+			console.log(e);
+		}
+	} else {
+		all_tasks = await tasks.getAllTasks();
+	}
 
 	all_tasks = await Promise.all(
 		all_tasks.map(async (task) => {

@@ -27,7 +27,6 @@ router.get('/:id/edit', async (req, res) => {
 			})
 		);
 		task.comments = comments;
-		task.createdBy = String(task.createdBy);
 
 		res.status(200).render('../src/views/partials/task_form', {
 			layout: null,
@@ -53,7 +52,39 @@ router.get('/:id/view', async (req, res) => {
 			})
 		);
 		task.comments = comments;
-		task.createdBy = String(task.createdBy);
+		try {
+			let user = await users.getUser(task.createdBy);
+			task.createdBy = user.firstName + ' ' + user.lastName;
+		} catch (e) {
+			task.createdBy = 'Nobody';
+		}
+
+		try {
+			let user = await users.getUser(task.assignedTo);
+			task.assignedTo = user.firstName + ' ' + user.lastName;
+		} catch (e) {
+			task.assignedTo = 'Nobody';
+		}
+
+		try {
+			switch (task.status) {
+				case 0:
+					task.status = 'Pending';
+					break;
+				case 1:
+					task.status = 'In Progress';
+					break;
+				case 2:
+					task.status = 'Review';
+					break;
+				case 3:
+					task.status = 'Done';
+					break;
+			}
+		} catch (e) {
+			// this should never happen
+			task.status = 'Pending';
+		}
 
 		res.status(200).render('../src/views/partials/task_view', {
 			layout: null,
@@ -162,8 +193,6 @@ router.post('/:id/drag', async (req, res) => {
 });
 
 router.post('/:id/comments/create', async (req, res) => {
-	console.log('POSTED');
-
 	let id = req.params.id;
 	let comment = req.body['comment'].trim();
 

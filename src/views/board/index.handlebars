@@ -1,9 +1,12 @@
 <script type="text/javascript" src="/public/js/board.js"></script>
 
-{{#if hasErrors}}
-<p class="error-list">{{error}}
-</p>
-{{/if}}
+
+<form id="search" action="/board" method="GET">
+    <input type="text" name="query" id="query">
+    <input type="submit" value="Search">
+    <input type="button" value="Clear Search" hidden='hidden'>
+</form>
+<br>
 
 <div class="kanban_board">
     {{#each task_sections}}
@@ -39,9 +42,6 @@
     <input type="submit" value="Add a Task">
 </form>
 
-<div id="task_form-area">
-    
-</div>
-
+<div id="task_form-area"></div>
 
 <script type="text/javascript" src="/public/js/board_jq.js"></script>
