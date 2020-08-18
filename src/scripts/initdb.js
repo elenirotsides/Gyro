@@ -41,10 +41,10 @@ const main = async () => {
 
 	console.log(newTask);
 
-	console.log(await tasks.getTasksByTag('te'));
-	console.log(await tasks.getTaskByName('Add actual'));
+	console.log(await tasks.filterTasksByTagsAndName('te'));
+	console.log(await tasks.filterTasksByTagsAndName('Add actual'));
 	try {
-		console.log(await tasks.getTaskByName('not in anything'));
+		console.log(await tasks.filterTasksByTagsAndName('not in anything'));
 	} catch (e) {
 		console.log(e);
 	}
@@ -95,7 +95,7 @@ const main = async () => {
 		['test', 'THISWILLBELOWERCASE']
 	);
 
-	console.log(await tasks.getTasksByTag('thiswillbe'));
+	console.log(await tasks.filterTasksByTagsAndName('thiswillbe'));
 
 	console.log('Database initialized.');
 	await db.serverConfig.close();
