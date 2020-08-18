@@ -66,6 +66,7 @@ router.get('/', async (req, res) => {
 	];
 
 	res.render('../src/views/board/index', {
+		title: 'Kanban Board',
 		task_sections: task_sections
 	});
 });

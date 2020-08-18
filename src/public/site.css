@@ -127,6 +127,11 @@ textarea {
 	font-size: small;
 }
 
+.error-list {
+	color: red;
+	font-weight: bold;
+}
+
 #comment {
 	color: red;
 	background: rgb(211, 208, 208);
@@ -136,4 +141,24 @@ textarea {
 	margin: 20px;
 	padding: 20px;
 	border-left: solid #aaa 2px;
+}
+
+#search_and_clear {
+	display: flex;
+}
+
+.login {
+	text-align: center;
+}
+
+#register {
+	padding: 1em;
+	display: block;
+	text-align: center;
+}
+
+#login-form {
+	display: inline-block;
+	text-align: left;
+	margin: 0 auto;
 }

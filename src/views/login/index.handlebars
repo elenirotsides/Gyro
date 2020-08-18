@@ -1,17 +1,21 @@
-{{#if hasErrors}}
-<p class="error-list">{{error}}
-</p>
-{{/if}}
+<div class="login">
+    <H1>Please enter your email and password</H1>
 
-<form action="/login" method="POST" id="login-form">
-    <label>Please enter your email and password </label>
-    <input type="email" name="email" id="email" required />
-    <!--Will, I had to change your type, name, and id bc it was set to username instead of email-->
-    <input type="password" name="password" id="password" required />
+    {{#if hasErrors}}
+    <p class="error-list">{{error}}
+    </p>
+    {{/if}}
 
-    <input type="submit" value="Submit">
-</form>
+    <form action="/login" method="POST" id="login-form">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required /><br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required /><br>
 
-<form action="/register" method="GET" id="register_here">
-    <input type="submit" value="Register Here">
-</form>
+        <input type="submit" value="Submit">
+    </form>
+
+    <form id="register" action="/register" method="GET">
+        <input type="submit" value="Register Here">
+    </form>
+</div>

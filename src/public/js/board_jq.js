@@ -42,7 +42,7 @@ $('.tickets').on('click', function (event) {
 });
 
 $('.edit_task').click(function (event) {
-	let task_id = $(this).attr('task_id'); //account for 'edit_' preceding ID
+	let task_id = $(this).attr('data-task_id'); //account for 'edit_' preceding ID
 
 	event.preventDefault();
 	event.stopPropagation();
@@ -66,7 +66,7 @@ $('.edit_task').click(function (event) {
 });
 
 $('.delete_task').click(function (event) {
-	let task_id = $(this).attr('task_id');
+	let task_id = $(this).attr('data-task_id');
 
 	event.preventDefault();
 	event.stopPropagation();

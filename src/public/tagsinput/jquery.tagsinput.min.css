@@ -7,7 +7,7 @@ div.tagsinput {
 	overflow-y: auto;
 }
 div.tagsinput span.tag {
-	border: 1px solid #a5d24a;
+	border: 1px solid #4d6b00;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	display: block;
@@ -15,7 +15,7 @@ div.tagsinput span.tag {
 	padding: 5px;
 	text-decoration: none;
 	background: #cde69c;
-	color: #638421;
+	color: #4d6b00;
 	margin-right: 5px;
 	margin-bottom: 5px;
 	font-family: helvetica;
@@ -23,7 +23,7 @@ div.tagsinput span.tag {
 }
 div.tagsinput span.tag a {
 	font-weight: 700;
-	color: #82ad2b;
+	color: #4d6b00;
 	text-decoration: none;
 	font-size: 11px;
 }
