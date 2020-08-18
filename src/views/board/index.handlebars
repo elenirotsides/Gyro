@@ -28,8 +28,8 @@
                 <form>
                     <input class="edit_task" type="submit" value="Edit" task_id="{{_id}}">
                 </form>
-                <form action="/tasks/{{_id}}/delete" method="POST">
-                    <input type="submit" value="Delete">
+                <form>
+                    <input class="delete_task" type="submit" value="Delete" task_id="{{_id}}">
                 </form>
             </div>
             {{/each}}

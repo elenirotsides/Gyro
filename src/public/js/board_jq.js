@@ -64,3 +64,27 @@ $('.edit_task').click(function (event) {
 	};
 	$.ajax(requestConfig);
 });
+
+$('.delete_task').click(function (event) {
+	let task_id = $(this).attr('task_id');
+
+	event.preventDefault();
+	event.stopPropagation();
+
+	let requestConfig = {
+		method: 'POST',
+		url: `/tasks/${task_id}/delete`,
+		contentType: 'application/json',
+		data: JSON.stringify({}),
+		success: function (responseMessage) {
+			let newElement = $(responseMessage);
+			$('#task_form-area').empty();
+			initTagInputs();
+			location.reload(true);
+		},
+		error: function (error) {
+			console.log('Error: ' + error);
+		}
+	};
+	$.ajax(requestConfig);
+});
