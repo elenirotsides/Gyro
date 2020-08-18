@@ -13,15 +13,18 @@
             <input required='required' type="text" name="taskName" id="taskName" value="{{task.taskName}}">
             <br>
             <label>Tags</label>
+            <p id="tagP">To add multiple tags, seperate them with a comma</p>
             <input type="text" name="tags" id="tags" class="tag-input" value="{{task.tags}}">
             <label>Description</label>
             <br>
-            <textarea required='required' type="text" name="description" id="description">{{task.description}}</textarea>
+            <textarea required='required' type="text" name="description"
+                id="description">{{task.description}}</textarea>
             <label>Assigned To</label>
             <select required='required' id="assigned_to" name="assigned_to">
                 <option value="nobody">Nobody</option>
                 {{#each users}}
-                <option {{#ifeq _id ../task.createdBy}}selected{{/ifeq}} value="{{_id}}">{{firstName}} {{lastName}}</option>
+                <option {{#ifeq _id ../task.createdBy}}selected{{/ifeq}} value="{{_id}}">{{firstName}} {{lastName}}
+                </option>
                 {{/each}}
             </select>
             <br>

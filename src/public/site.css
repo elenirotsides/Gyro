@@ -8,7 +8,6 @@ body {
 	display: inline-block;
 }
 
-
 .logoimg {
 	width: 50pt;
 }
@@ -62,11 +61,11 @@ img {
 	max-width: 100%;
 	margin: 12px;
 	background: white;
-	cursor: pointer; 
+	cursor: pointer;
 }
 
 .tickets:active {
-	background: #FFEEEE;
+	background: #ffeeee;
 }
 
 .header_text {
@@ -124,10 +123,13 @@ textarea {
 	justify-content: left;
 }
 
+#tagP {
+	font-size: small;
+}
+
 #comment {
-	color:red
-	background: gray
-	padding-box: 10px
+	color: red;
+	background: rgb(211, 208, 208);
 }
 
 #task_form-area {
