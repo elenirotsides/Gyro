@@ -34,7 +34,7 @@ function drop(ev) {
 	console.log(dropTarget);
 	dropTarget.appendChild(document.getElementById(taskID));
 
-	let newTaskStage = $(dropTarget).attr('task-stage');
+	let newTaskStage = $(dropTarget).attr('data-task-stage');
 	console.log('change to ' + newTaskStage);
 	console.log(taskID);
 

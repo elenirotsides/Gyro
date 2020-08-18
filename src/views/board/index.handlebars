@@ -1,4 +1,4 @@
-<script type="text/javascript" src="/public/js/board.js"></script>
+<script src="/public/js/board.js"></script>
 
 
 <form id="search" action="/board" method="GET">
@@ -11,11 +11,11 @@
 
 <div class="kanban_board">
     {{#each task_sections}}
-    <div class="column" id="{{section_name}}">
+    <div class="column">
         <H1 class="title">{{section_name}}</H1>
-        <div class="drop-target" task-stage="{{task_stage}}">
+        <div class="drop-target" data-task-stage="{{task_stage}}">
             {{#each task_list}}
-            <div class="tickets" id="{{_id}}" draggable="true" width="336" height="69">
+            <div class="tickets" id="{{_id}}" draggable="true">
                 {{taskName}}<br>
                 <span>{{#each tags}}
                     <button class="tag">
@@ -27,10 +27,10 @@
                 <span>Creator: {{createdBy}}</span><br>
                 <span>Assigned: {{assignedTo}}</span>
                 <form>
-                    <input class="edit_task" type="submit" value="Edit" task_id="{{_id}}">
+                    <input class="edit_task" type="submit" value="Edit" data-task_id="{{_id}}">
                 </form>
                 <form>
-                    <input class="delete_task" type="submit" value="Delete" task_id="{{_id}}">
+                    <input class="delete_task" type="submit" value="Delete" data-task_id="{{_id}}">
                 </form>
             </div>
             {{/each}}
@@ -45,4 +45,4 @@
 
 <div id="task_form-area"></div>
 
-<script type="text/javascript" src="/public/js/board_jq.js"></script>
+<script src="/public/js/board_jq.js"></script>
