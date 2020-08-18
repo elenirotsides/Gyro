@@ -36,15 +36,16 @@
 </div>
 <hr>
 <div id='comments'>
-    <span>Comments</span>
+    <label for="comment">Comments</label>
     <table>
         {{#each task.comments}}
-            <tr>
-                <td>[{{user}}]</td>
-                <td>{{comment}}</td>
-            </tr>
+        <tr>
+            <td>[{{user}}]</td>
+            <td>{{comment}}</td>
+        </tr>
         {{/each}}
     </table>
+
 
     <form action="/tasks/{{task._id}}/comments/create" method="POST" id="comment_form">
         <textarea required type="text" name="comment" id="comment" placeholder="Add a comment"></textarea>
