@@ -1,12 +1,16 @@
 <script src="/public/js/board.js"></script>
 
+<div id="search_and_clear">
+    <form id="search" action="/board" method="GET">
+        <label for="query">Search by keyword</label>
+        <input type="text" name="query" id="query">
+        <input type="submit" value="Search">
+    </form>
+    <form id="clear_search" action="/board" method="GET">
+        <input type="submit" value="Clear">
+    </form>
+</div>
 
-<form id="search" action="/board" method="GET">
-    <label for="query">Search by keyword</label>
-    <input type="text" name="query" id="query">
-    <input type="submit" value="Search">
-    <input type="button" value="Clear Search" hidden='hidden'>
-</form>
 <br>
 
 <div class="kanban_board">
