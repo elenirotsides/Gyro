@@ -12,29 +12,29 @@
 <div class="kanban_board">
     {{#each task_sections}}
     <div class="column" id="{{section_name}}">
-        <H1 class="title">{{section_name}}</H2>
-            <div class="drop-target" task-stage="{{task_stage}}">
-                {{#each task_list}}
-                <div class="tickets" id="{{_id}}" draggable="true" width="336" height="69">
-                    {{taskName}}<br>
-                    <span>{{#each tags}}
-                        <button class="tag">
-                            {{this}}
-                        </button>
-                        {{/each}}
-                    </span>
-                    <br>
-                    <span>Creator: {{createdBy}}</span><br>
-                    <span>Assigned: {{assignedTo}}</span>
-                    <form>
-                        <input class="edit_task" type="submit" value="Edit" task_id="{{_id}}">
-                    </form>
-                    <form>
-                        <input class="delete_task" type="submit" value="Delete" task_id="{{_id}}">
-                    </form>
-                </div>
-                {{/each}}
+        <H1 class="title">{{section_name}}</H1>
+        <div class="drop-target" task-stage="{{task_stage}}">
+            {{#each task_list}}
+            <div class="tickets" id="{{_id}}" draggable="true" width="336" height="69">
+                {{taskName}}<br>
+                <span>{{#each tags}}
+                    <button class="tag">
+                        {{this}}
+                    </button>
+                    {{/each}}
+                </span>
+                <br>
+                <span>Creator: {{createdBy}}</span><br>
+                <span>Assigned: {{assignedTo}}</span>
+                <form>
+                    <input class="edit_task" type="submit" value="Edit" task_id="{{_id}}">
+                </form>
+                <form>
+                    <input class="delete_task" type="submit" value="Delete" task_id="{{_id}}">
+                </form>
             </div>
+            {{/each}}
+        </div>
     </div>
     {{/each}}
 </div>
