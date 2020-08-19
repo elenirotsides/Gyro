@@ -96,9 +96,6 @@ router.get('/:id/view', async (req, res) => {
 });
 
 router.post('/create', async (req, res) => {
-	//this route is done
-	//I just don't know how to fix the page its rendering when there's an error,
-	//this is a known bug that needs to be resolved
 	input = req.body;
 
 	if (
@@ -106,7 +103,6 @@ router.post('/create', async (req, res) => {
 		!input['description'].trim() ||
 		!input['tags'].trim()
 	) {
-		//don't know what page this should render here
 		return res.status(400).render('../src/views/board/index', {
 			title: 'Error',
 			hasErrors: true,
