@@ -123,10 +123,6 @@ textarea {
 	justify-content: left;
 }
 
-#tagP {
-	font-size: small;
-}
-
 .error-list {
 	color: red;
 	font-weight: bold;
@@ -161,4 +157,8 @@ textarea {
 	display: inline-block;
 	text-align: left;
 	margin: 0 auto;
+}
+
+small {
+	font-size: 9pt;
 }
