@@ -13,7 +13,7 @@ CS 546 Final Project
    `npm install`
 
 3. Initialize the database
-   `node src/scripts/initdb`
+   `npm run initdb`
 
 4. Run the local server
    `npm start`
