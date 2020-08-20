@@ -36,6 +36,7 @@ router.get('/:id/edit', async (req, res) => {
 		});
 	} catch (e) {
 		res.status(404).json({ message: `task ${req.params.id} not found` });
+		throw e;
 	}
 });
 
@@ -84,6 +85,7 @@ router.get('/:id/view', async (req, res) => {
 		} catch (e) {
 			// this should never happen
 			task.status = 'Pending';
+			console.log(JSON.stringify(e));
 		}
 
 		res.status(200).render('../src/views/partials/task_view', {
@@ -92,22 +94,15 @@ router.get('/:id/view', async (req, res) => {
 		});
 	} catch (e) {
 		res.status(404).json({ message: `task ${req.params.id} not found` });
+		throw e;
 	}
 });
 
 router.post('/create', async (req, res) => {
 	input = req.body;
 
-	if (
-		!input['taskName'].trim() ||
-		!input['description'].trim() ||
-		!input['tags'].trim()
-	) {
-		return res.status(400).render('../src/views/board/index', {
-			title: 'Error',
-			hasErrors: true,
-			error: 'Input cannot be blank'
-		});
+	if (!input['taskName'].trim() || !input['description'].trim()) {
+		return res.status(400).send({});
 	}
 
 	tags = input['tags'].trim().split(',');
@@ -122,11 +117,8 @@ router.post('/create', async (req, res) => {
 			tags
 		);
 	} catch (e) {
-		return res.render('../src/views/board/index', {
-			title: 'Error',
-			hasErrors: true,
-			error: 'Uh oh, something went wrong, please try again'
-		});
+		res.status(400).send({});
+		throw e;
 	}
 	res.redirect('/board');
 });
@@ -138,33 +130,31 @@ router.post('/:id/edit', async (req, res) => {
 	let description = req.body['description'];
 	let assigned_to = req.body['assigned_to'];
 
-	await tasks.rawUpdateTask(id, {
-		taskName: name,
-		tags: tags.split(',').map((s) => s.trim()),
-		description: description,
-		assignedTo: assigned_to
-	});
+	try {
+		await tasks.updateTask(id, {
+			taskName: name,
+			tags: tags.split(',').map((s) => s.trim()),
+			description: description,
+			assignedTo: assigned_to
+		});
+	} catch (e) {
+		res.status(400).send({});
+		throw e;
+	}
 
-	res.redirect('/board');
+	return res.status(200).send({});
 });
 
 router.post('/:id/delete', async (req, res) => {
 	if (!req.params.id) {
-		return res.render('../src/views/board/index', {
-			title: 'Error',
-			hasErrors: true,
-			error: 'Uh oh, something went wrong, please try again'
-		});
+		return res.status(400).send({});
 	}
 
 	try {
 		await tasks.deleteTask(req.params.id);
 	} catch (e) {
-		return res.status(404).render('../src/views/board/index', {
-			title: 'Error',
-			hasErrors: true,
-			error: 'Uh oh, something went wrong, please try again'
-		});
+		res.status(404).send({});
+		throw e;
 	}
 
 	res.status(200).redirect('/');
@@ -179,10 +169,10 @@ router.post('/:id/drag', async (req, res) => {
 	}
 
 	try {
-		await tasks.rawUpdateTask(id, { status: Number(stage) });
+		await tasks.updateTask(id, { status: Number(stage) });
 	} catch (e) {
-		console.log(e);
-		return res.status(400).send();
+		res.status(400).send();
+		throw e;
 	}
 
 	return res.status(200).send();
@@ -193,22 +183,14 @@ router.post('/:id/comments/create', async (req, res) => {
 	let comment = req.body['comment'].trim();
 
 	if (!comment) {
-		return res.status(400).render('../src/views/board/index', {
-			title: 'Error',
-			hasErrors: true,
-			error: "Comment can't be blank!"
-		});
+		return res.status(400).send({});
 	}
 
 	try {
-		await tasks.addComment(id, req.session.user._id, comment);
+		await tasks.addComment(id, String(req.session.user._id), comment);
 	} catch (e) {
-		console.log(e);
-		return res.render('..src/views/board/index', {
-			title: 'Error',
-			hasErrors: true,
-			error: 'Uh oh, something went wrong! Please try again'
-		});
+		res.status(400).send({});
+		throw e;
 	}
 
 	return res.status(200).redirect('/');

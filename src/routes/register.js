@@ -56,6 +56,7 @@ router.post('/', async (req, res) => {
 				hasErrors: true,
 				error: 'Whoops! Something has gone wrong, please try again.'
 			});
+			throw e;
 		}
 	} else {
 		return res.status(400).render('../src/views/login/register', {

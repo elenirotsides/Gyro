@@ -5,16 +5,14 @@ const auth = require('../util/auth');
 
 const getAllUsers = async () => {
 	const collection = await users();
-
 	const userList = await collection.find({}).toArray();
-
 	return userList;
 };
 
 const addUser = async (firstName, lastName, email, plaintextPassword) => {
-	verify.str(firstName);
-	verify.str(lastName);
-	verify.str(email);
+	verify.alphaStr(firstName);
+	verify.alphaStr(lastName);
+	verify.email(email);
 	verify.str(plaintextPassword);
 
 	let hashedPassword = auth.genHash(plaintextPassword);
@@ -26,8 +24,7 @@ const addUser = async (firstName, lastName, email, plaintextPassword) => {
 		lastName: lastName,
 		email: email,
 		hashedPassword: hashedPassword,
-		isAdmin: false,
-		tasksCreated: []
+		isAdmin: false
 	});
 
 	let id = insertInfo.insertedId;
@@ -38,7 +35,7 @@ const addUser = async (firstName, lastName, email, plaintextPassword) => {
 };
 
 const getUser = async (id) => {
-	verify.str(id);
+	verify.objID(id);
 
 	let collection = await users();
 
@@ -55,7 +52,7 @@ const getUser = async (id) => {
 };
 
 const getUserByEmail = async (email) => {
-	verify.str(email);
+	verify.email(email);
 
 	let collection = await users();
 

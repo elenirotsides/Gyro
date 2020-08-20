@@ -14,10 +14,7 @@ $('#add_task')
 			data: JSON.stringify({})
 		};
 		$.ajax(requestConfig).then(function (responseMessage) {
-			console.log(responseMessage);
 			let newElement = $(responseMessage);
-			let currentLink = $(this);
-			let currentId = currentLink.data('id');
 
 			$('#task_form-area').append(newElement);
 			initTagInputs();
@@ -35,16 +32,19 @@ $('.tickets').on('click', function (event) {
 		method: 'GET',
 		url: `/tasks/${this.id}/view`,
 		contentType: 'application/json',
-		data: JSON.stringify({})
+		data: JSON.stringify({}),
+		success: function (response) {
+			console.log('success:' + JSON.stringify(response));
+			let newElement = $(response);
+			$('#task_form-area').empty();
+			$('#task_form-area').append(newElement);
+			initTagInputs();
+		},
+		error: function (error) {
+			console.log('error: ' + JSON.stringify(error));
+		}
 	};
-	$.ajax(requestConfig).then(function (responseMessage) {
-		console.log(responseMessage);
-		let newElement = $(responseMessage);
-
-		$('#task_form-area').empty();
-		$('#task_form-area').append(newElement);
-		initTagInputs();
-	});
+	$.ajax(requestConfig);
 });
 
 $('.edit_task').click(function (event) {
@@ -102,12 +102,73 @@ function displayComments() {
 		contentType: 'application/json',
 		data: JSON.stringify({})
 	};
-	$.ajax(requestConfig2).then(function (responseMessage) {
-		console.log(responseMessage);
-		let newElement = $(responseMessage);
+	$.ajax(requestConfig2)
+		.then(function (responseMessage) {
+			let newElement = $(responseMessage);
 
-		$('#task_form-area').empty();
-		$('#task_form-area').append(newElement);
-		initTagInputs();
-	});
+			$('#task_form-area').empty();
+			$('#task_form-area').append(newElement);
+			initTagInputs();
+		})
+		.catch(function (error) {
+			console.log('error: ' + JSON.stringify(responseMessage));
+		});
 }
+$('#comment_form').submit(function (event) {
+	let task_id = $(this).attr('data-task_id');
+
+	event.preventDefault();
+	event.stopPropagation();
+
+	var data = {};
+	data.comment = document.getElementById('comment').value;
+	let requestConfig = {
+		method: 'POST',
+		url: `/tasks/` + task_id + `/comments/create`,
+		contentType: 'application/json',
+		data: JSON.stringify(data),
+		success: function (responseMessage) {
+			displayComments();
+		},
+		error: function (error) {
+			console.log('Error: ' + JSON.stringify(error));
+		}
+	};
+	$.ajax(requestConfig);
+});
+
+function getFormObj(form) {
+	var formObj = {};
+	var inputs = form.serializeArray();
+	$.each(inputs, function (i, input) {
+		formObj[input.name] = input.value;
+	});
+	return formObj;
+}
+
+$('#task_form').submit(function (event) {
+	event.preventDefault();
+	let url = $(this).attr('action');
+
+	let data = getFormObj($(this));
+
+	console.log(data);
+	console.log(JSON.stringify(data));
+
+	$.ajax({
+		method: 'POST',
+		url: url,
+		contentType: 'application/json',
+		data: JSON.stringify(data),
+		success: function (response) {
+			window.location.replace('/');
+		},
+		error: function (error) {
+			$('#taskFormError')
+				.show()
+				.html(
+					'Error submitting: check that tags are less than 25 characters long.'
+				);
+		}
+	});
+});

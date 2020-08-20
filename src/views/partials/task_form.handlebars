@@ -4,8 +4,12 @@
 <div id='taskBar'>
     <div id='taskForm'>
         {{#if newTask}}
-        <H1>Create a new Task</H1>
+            <H1>Create a new Task</H1>
+        {{else}}
+            <H1>Edit a Task</H1>
         {{/if}}
+
+        <span id="taskFormError" class="hidden"></span>
 
         <form action="{{#if newTask}}/tasks/create{{else}}/tasks/{{task._id}}/edit{{/if}}" method="POST" id="task_form">
             <label for="taskName">Task Name</label>
@@ -30,5 +34,6 @@
             <br>
             <input type="submit" value="Submit" id="Task_Submit">
         </form>
+        <script src="/public/js/board_jq.js"></script>
     </div>
 </div>

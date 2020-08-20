@@ -143,6 +143,14 @@ textarea {
 	display: flex;
 }
 
+.hidden {
+	visibility: none;
+}
+
+#taskFormError {
+	color: red;
+}
+
 .login {
 	text-align: center;
 }

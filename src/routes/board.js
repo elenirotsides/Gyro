@@ -15,9 +15,7 @@ router.get('/', async (req, res) => {
 			all_tasks = all_tasks.concat(
 				await tasks.filterTasksByTagsAndName(query)
 			);
-		} catch (e) {
-			console.log(e);
-		}
+		} catch (e) {}
 	} else {
 		all_tasks = await tasks.getAllTasks();
 	}

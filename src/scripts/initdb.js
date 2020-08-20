@@ -30,9 +30,6 @@ const main = async () => {
 		['boring', 'notgonnadoit']
 	);
 	console.log(newTask);
-	newTask = await tasks.setTaskName(String(newTask._id), 'new name');
-	newTask = await tasks.setTaskStatus(String(newTask._id), 1);
-	newTask = await tasks.setTaskTags(String(newTask._id), ['new', 'tags']);
 	newTask = await tasks.addComment(
 		String(newTask._id),
 		String(userWes._id),
@@ -85,15 +82,14 @@ const main = async () => {
 		['tag1', 'tag3']
 	);
 
-	await tasks.updateTask(
-		String(newTask._id),
-		'edited name',
-		'Description',
-		String(userWes._id),
-		String(userWes._id),
-		0,
-		['test', 'THISWILLBELOWERCASE']
-	);
+	await tasks.updateTask(String(newTask._id), {
+		taskName: 'edited name',
+		description: 'Description',
+		createdBy: String(userWes._id),
+		assignedTo: String(userWes._id),
+		status: 0,
+		tags: ['test', 'THISWILLBELOWERCASE']
+	});
 
 	console.log(await tasks.filterTasksByTagsAndName('thiswillbe'));
 

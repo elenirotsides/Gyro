@@ -17,12 +17,13 @@ router.post('/', async (req, res) => {
 	try {
 		user = await users.getUserByEmail(input['email'].toLowerCase());
 	} catch (e) {
-		return res.render('../src/views/login/index', {
+		res.render('../src/views/login/index', {
 			hasErrors: true,
 			hideLogout: true,
 			error:
 				'Email or Password is incorrect. Please try logging in again.'
 		});
+		throw e;
 	}
 
 	if (input['email'].toLowerCase() === user.email) {
