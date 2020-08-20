@@ -1,29 +1,35 @@
-$('#add_task').click(function (event) {
-	event.preventDefault();
-	$('#task_form-area').empty();
+var storedId;
 
-	let requestConfig = {
-		method: 'GET',
-		url: '/tasks/create',
-		contentType: 'application/json',
-		data: JSON.stringify({})
-	};
-	$.ajax(requestConfig).then(function (responseMessage) {
-		console.log(responseMessage);
-		let newElement = $(responseMessage);
-		let currentLink = $(this);
-		let currentId = currentLink.data('id');
+$('#add_task')
+	.unbind()
+	.click(function (event) {
+		event.preventDefault();
+		event.stopPropagation();
+		$('#task_form-area').empty();
 
-		$('#task_form-area').append(newElement);
-		initTagInputs();
+		let requestConfig = {
+			method: 'GET',
+			url: '/tasks/create',
+			contentType: 'application/json',
+			data: JSON.stringify({})
+		};
+		$.ajax(requestConfig).then(function (responseMessage) {
+			console.log(responseMessage);
+			let newElement = $(responseMessage);
+			let currentLink = $(this);
+			let currentId = currentLink.data('id');
+
+			$('#task_form-area').append(newElement);
+			initTagInputs();
+		});
 	});
-});
 
 $('#Task_Submit').submit(function (event) {
 	$('#task_form-area').hide();
 });
 $('.tickets').on('click', function (event) {
 	event.preventDefault();
+	storedId = this.id;
 
 	let requestConfig = {
 		method: 'GET',
@@ -88,3 +94,20 @@ $('.delete_task').click(function (event) {
 	};
 	$.ajax(requestConfig);
 });
+function displayComments() {
+	console.log(storedId);
+	let requestConfig2 = {
+		method: 'GET',
+		url: `/tasks/${storedId}/view`,
+		contentType: 'application/json',
+		data: JSON.stringify({})
+	};
+	$.ajax(requestConfig2).then(function (responseMessage) {
+		console.log(responseMessage);
+		let newElement = $(responseMessage);
+
+		$('#task_form-area').empty();
+		$('#task_form-area').append(newElement);
+		initTagInputs();
+	});
+}
