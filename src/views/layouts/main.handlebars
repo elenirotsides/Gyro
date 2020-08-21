@@ -17,18 +17,19 @@
 </head>
 
 <body>
-    <header id="gyro_header">
-        <nav class="navbar">
+    <header>
+        <nav class="navbar navbar-expand-lg">
             <img src="/public/logo.png" alt="Gyro Logo">
-            <h1 class="ml-0">Gyro</h1>
+            <h1 class="navbar-nav mr-auto">Gyro</h1>
             {{#unless hideLogout}}
-            <div class="form-inline">
+            <div class="float-right">
                 <form action="/logout" method="GET" id="logout_button">
                     <input type="submit" class="btn btn-secondary" value="Logout">
                 </form>
             </div>
             {{/unless}}
         </nav>
+
     </header>
     <main>
         {{{body}}}

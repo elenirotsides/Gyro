@@ -3,12 +3,6 @@ body {
 	font-size: 16pt;
 }
 
-#logout_button {
-	display: inline-block;
-	vertical-align: top;
-	padding-left: 90%;
-}
-
 #registration_form {
 	display: block;
 	width: 150px;
@@ -110,7 +104,8 @@ textarea {
 }
 
 #taskFormError {
-	color: red;
+	color: white;
+	background-color: #d9534f;
 }
 
 .login {
