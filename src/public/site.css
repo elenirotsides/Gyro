@@ -3,28 +3,10 @@ body {
 	font-size: 16pt;
 }
 
-.logoimg {
-	width: 50pt;
-}
-
-.header_text {
-	vertical-align: top;
-	font-size: 50pt;
-}
-
-.header {
-	display: inline-block;
-}
-
 #logout_button {
 	display: inline-block;
 	vertical-align: top;
 	padding-left: 90%;
-}
-
-img {
-	width: 5%;
-	height: auto;
 }
 
 #registration_form {
