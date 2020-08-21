@@ -9,6 +9,8 @@
     <script src="/public/tagsinput/jquery.tagsinput.min.js"></script>
     <script src="/public/js/taginput.js"></script>
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="/public/site.css">
     <link rel="stylesheet" href="/public/tagsinput/jquery.tagsinput.min.css">
     <link rel="icon" type="image/png" sizes="16x16" href="public/logo-16x16.png">
@@ -16,17 +18,28 @@
 
 <body>
     <header id="gyro_header">
-        <img src="/public/logo.png" alt="Gyro Logo" class='logoimg'>
-        <span class="header_text">Gyro</span>
-        {{#unless hideLogout}}
-        <form action="/logout" method="GET" id="logout_button">
-            <input type="submit" value="Logout">
-        </form>
-        {{/unless}}
+        <nav class="navbar">
+            <img src="/public/logo.png" alt="Gyro Logo">
+            <h1 class="ml-0">Gyro</h1>
+            {{#unless hideLogout}}
+            <div class="form-inline">
+                <form action="/logout" method="GET" id="logout_button">
+                    <input type="submit" class="btn btn-secondary" value="Logout">
+                </form>
+            </div>
+            {{/unless}}
+        </nav>
     </header>
     <main>
         {{{body}}}
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

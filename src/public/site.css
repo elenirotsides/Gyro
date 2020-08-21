@@ -3,11 +3,6 @@ body {
 	font-size: 16pt;
 }
 
-.header.content > img,
-.header.content > span {
-	display: inline-block;
-}
-
 .logoimg {
 	width: 50pt;
 }
@@ -17,10 +12,14 @@ body {
 	font-size: 50pt;
 }
 
+.header {
+	display: inline-block;
+}
+
 #logout_button {
 	display: inline-block;
 	vertical-align: top;
-	padding-left: 80%;
+	padding-left: 90%;
 }
 
 img {
@@ -68,11 +67,6 @@ img {
 	background: #ffeeee;
 }
 
-.header_text {
-	vertical-align: top;
-	font-size: 50pt;
-}
-
 .row:after {
 	content: '';
 	display: table;
@@ -90,15 +84,6 @@ img {
 	background-color: lightgray;
 	border: 1px solid #aaaaaa;
 	background-color: #f5f5f5;
-}
-
-.tag {
-	background-color: #ff6600;
-	border: none;
-	color: black;
-	text-align: center;
-	text-decoration: none;
-	border-radius: 16px;
 }
 
 .drop-target {
@@ -121,11 +106,6 @@ textarea {
 
 #taskForm {
 	justify-content: left;
-}
-
-.error-list {
-	color: red;
-	font-weight: bold;
 }
 
 #comment {
@@ -152,12 +132,6 @@ textarea {
 }
 
 .login {
-	text-align: center;
-}
-
-#register {
-	padding: 1em;
-	display: block;
 	text-align: center;
 }
 

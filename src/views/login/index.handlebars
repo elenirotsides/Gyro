@@ -1,21 +1,26 @@
-<div class="login">
+<div class="mx-auto" style="width: 60%;">
     <H1>Please enter your email and password</H1>
 
     {{#if hasErrors}}
-    <p class="error-list">{{error}}
+    <p class="p-3 mb-2 bg-danger text-white">{{error}}
     </p>
     {{/if}}
 
     <form action="/login" method="POST" id="login-form">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required /><br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required /><br>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" name="email" id="email" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" name="password" id="password" required /><br>
+        </div>
 
-        <input type="submit" value="Submit">
+        <input type="submit" class="btn btn-primary" value="Submit">
     </form>
-
-    <form id="register" action="/register" method="GET">
-        <input type="submit" value="Register Here">
-    </form>
+    <div class="mt-2">
+        <form id="register" action="/register" method="GET">
+            <input type="submit" class="btn btn-secondary" value="Register Here">
+        </form>
+    </div>
 </div>

@@ -1,38 +1,46 @@
 {{#if hasErrors}}
-<p class="error-list">{{error}}</p>
+<p class="p-3 mb-2 bg-danger text-white">{{error}}</p>
 {{/if}}
 <div id='taskBar'>
     <div id='taskForm'>
         {{#if newTask}}
-            <H1>Create a new Task</H1>
+        <H1>Create a new Task</H1>
         {{else}}
-            <H1>Edit a Task</H1>
+        <H1>Edit a Task</H1>
         {{/if}}
 
         <span id="taskFormError" class="hidden"></span>
 
         <form action="{{#if newTask}}/tasks/create{{else}}/tasks/{{task._id}}/edit{{/if}}" method="POST" id="task_form">
-            <label for="taskName">Task Name</label>
+            <div class="form-group">
+                <label for="taskName">Task Name</label>
+                <input required='required' class="form-control" type="text" name="taskName" id="taskName"
+                    value="{{task.taskName}}">
+            </div>
+            <div class="form-group">
+                <label for="tags">Tags <span id="tag_desc">(To add multiple tags, seperate them with a
+                        comma)</span></label><label for="tags_tag"></label>
+                <input type="text" name="tags" id="tags" class="tag-input form-control" value="{{task.tags}}">
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <br>
+                <textarea required='required' class="form-control" type="text" name="description"
+                    id="description">{{task.description}}</textarea>
+            </div>
+            <div class="dropdown">
+                <label for="assigned_to">Assigned To</label>
+                <select required='required' id="assigned_to" name="assigned_to">
+                    <option value="nobody">Nobody</option>
+                    {{#each users}}
+                    <option class="dropdown-item" {{#ifeq _id ../task.createdBy}}selected{{/ifeq}} value="{{_id}}">
+                        {{firstName}} {{lastName}}
+                    </option>
+                    {{/each}}
+                </select>
+            </div>
             <br>
-            <input required='required' type="text" name="taskName" id="taskName" value="{{task.taskName}}">
-            <br>
-            <label for="tags">Tags <span id="tag_desc">(To add multiple tags, seperate them with a
-                    comma)</span></label><label for="tags_tag"></label>
-            <input type="text" name="tags" id="tags" class="tag-input" value="{{task.tags}}">
-            <label for="description">Description</label>
-            <br>
-            <textarea required='required' type="text" name="description"
-                id="description">{{task.description}}</textarea>
-            <label for="assigned_to">Assigned To</label>
-            <select required='required' id="assigned_to" name="assigned_to">
-                <option value="nobody">Nobody</option>
-                {{#each users}}
-                <option {{#ifeq _id ../task.createdBy}}selected{{/ifeq}} value="{{_id}}">{{firstName}} {{lastName}}
-                </option>
-                {{/each}}
-            </select>
-            <br>
-            <input type="submit" value="Submit" id="Task_Submit">
+            <input type="submit" class="btn btn-primary" value="Submit" id="Task_Submit">
         </form>
         <script src="/public/js/board_jq.js"></script>
     </div>
