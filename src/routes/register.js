@@ -54,7 +54,7 @@ router.post('/', async (req, res) => {
 				title: 'Error',
 				hideLogout: true,
 				hasErrors: true,
-				error: 'Whoops! Something has gone wrong, please try again.'
+				error: e
 			});
 			throw e;
 		}
