@@ -16,22 +16,27 @@ body {
 
 .column {
 	border: black;
-	border-style: solid;
-	border-radius: 1rem;
+	border-radius: 0.5rem;
 	text-align: center;
 	float: left;
+	box-shadow: 0 0 8px 1px black;
 }
 
 .title {
 	vertical-align: top;
-	text-decoration: underline;
+	color: #007bff;
+	text-shadow: 2px 2px 4px white;
+	font-size: 2rem;
+}
+
+.enterInfo {
+	font-size: 1.5rem;
 }
 
 .tickets {
 	text-align: left;
-	border-style: solid;
 	border-radius: 0.5rem;
-	box-shadow: 0 0 5px 1px lightgrey;
+	box-shadow: 0 0 5px 1px black;
 	padding: 5px;
 	max-width: 100%;
 	margin: 12px;
