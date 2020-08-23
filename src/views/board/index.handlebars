@@ -1,0 +1,56 @@
+<script src="/public/js/board.js"></script>
+
+<div class="p-2">
+    <div id="search_and_clear">
+        <form id="search" action="/board" method="GET">
+            <label for="query">Search by keyword</label>
+            <input type="text" name="query" id="query">
+            <input type="submit" class="btn-sm btn-primary" value="Search">
+        </form>
+        <form id="clear_search" action="/board" method="GET">
+            <input type="submit" class="btn-sm btn-secondary" value="Clear Filter">
+        </form>
+    </div>
+
+    <br>
+
+    <div class="kanban_board">
+        {{#each task_sections}}
+        <div class="column">
+            <H1 class="title">{{section_name}}</H1>
+            <div class="drop-target" data-task-stage="{{task_stage}}">
+                {{#each task_list}}
+                <div class="tickets" id="{{_id}}" draggable="true">
+                    {{taskName}}<br>
+                    <span>{{#each tags}}
+                        <span class="badge badge-pill badge-primary">{{this}}</span>
+                        {{/each}}
+                    </span>
+                    <br>
+                    <span>Author: {{createdBy}}</span><br>
+                    <span>Assigned: {{assignedTo}}</span>
+                    <div class="row ml-1">
+                        <form>
+                            <input class="edit_task btn-sm btn-secondary m-1" type="submit" value="Edit"
+                                data-task_id="{{_id}}">
+                        </form>
+                        <form>
+                            <input class="delete_task btn-sm btn-secondary m-1" type="submit" value="Delete"
+                                data-task_id="{{_id}}">
+                        </form>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <br>
+    <form id="add_task">
+        <input type="submit" class="btn btn-primary mt-1" value="Add a Task">
+    </form>
+
+    <div id="task_form-area"></div>
+</div>
+
+<script src="/public/js/board_jq.js"></script>

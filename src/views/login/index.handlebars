@@ -1,0 +1,26 @@
+<div class="ml-5">
+    {{#if hasErrors}}
+    <span class="p-1 mb-2 bg-danger text-white">{{error}}
+    </span>
+    {{/if}}
+
+    <H1 class="enterInfo">Please enter your email and password</H1>
+
+    <form action="/login" method="POST" id="login-form">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" name="email" id="email" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" name="password" id="password" required /><br>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
+    <div class="mt-2">
+        <form id="register" action="/register" method="GET">
+            <input type="submit" class="btn btn-secondary" value="Register Here">
+        </form>
+    </div>
+</div>
