@@ -1,10 +1,10 @@
 <div class="ml-5">
-    <H1 class="enterInfo">Please enter your email and password</H1>
-
     {{#if hasErrors}}
-    <p class="p-3 mb-2 bg-danger text-white">{{error}}
-    </p>
+    <span class="p-1 mb-2 bg-danger text-white">{{error}}
+    </span>
     {{/if}}
+
+    <H1 class="enterInfo">Please enter your email and password</H1>
 
     <form action="/login" method="POST" id="login-form">
         <div class="form-group">
