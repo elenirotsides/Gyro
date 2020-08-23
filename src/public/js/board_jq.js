@@ -183,3 +183,5 @@ $('#task_form')
 			}
 		});
 	});
+
+initDragDrop();
