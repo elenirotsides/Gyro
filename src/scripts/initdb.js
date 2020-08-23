@@ -15,83 +15,72 @@ const main = async () => {
 		'wes.laf@email.com',
 		pass
 	);
-	let result = userWes.checkPassword(pass);
-	console.log(userWes);
 
-	userWes = await users.getUserByEmail('wes.laf@email.com');
-	console.log(userWes);
+	let userEleni = await users.addUser(
+		'Eleni',
+		'Rotsides',
+		'eleni.rot@email.com',
+		pass
+	);
 
-	let newTask = await tasks.addTask(
-		'Add actual functionality',
-		"This seems like a feature that we need to get an A+... so let's do that.",
+	let userWill = await users.addUser(
+		'Will',
+		'Deroberts',
+		'will.der@email.com',
+		pass
+	);
+
+	let userCass = await users.addUser(
+		'Cassidy',
+		'Bickler',
+		'cbick@email.com',
+		pass
+	);
+
+	await tasks.addTask(
+		'Create the proof of concept',
+		'Patrick Hill seemed really intent on this feature.',
+		String(userEleni._id),
+		String(userEleni._id),
+		3,
+		['milestone']
+	);
+
+	await tasks.addTask(
+		'Add google integration',
+		'For the future this will be good.',
 		String(userWes._id),
 		String(userWes._id),
 		0,
-		['boring', 'notgonnadoit']
-	);
-	console.log(newTask);
-	newTask = await tasks.addComment(
-		String(newTask._id),
-		String(userWes._id),
-		'this is a comment'
+		['feature']
 	);
 
-	console.log(newTask);
-
-	console.log(await tasks.filterTasksByTagsAndName('te'));
-	console.log(await tasks.filterTasksByTagsAndName('Add actual'));
-	try {
-		console.log(await tasks.filterTasksByTagsAndName('not in anything'));
-	} catch (e) {
-		console.log(e);
-	}
-
-	newTask = await tasks.addTask(
-		'Write a webbapp',
-		'this is a description',
-		String(userWes._id),
-		String(userWes._id),
+	await tasks.addTask(
+		'Fix major bug before demo',
+		'Please do this before we submit...',
+		String(userWill._id),
+		String(userWill._id),
 		1,
-		['tag1', 'tag2']
+		['bug']
 	);
 
-	newTask = await tasks.addTask(
-		'beep boop beep',
-		'this is not a good description of this feature.',
-		String(userWes._id),
-		String(userWes._id),
-		1,
-		['tag1', 'tag2']
+	await tasks.addTask(
+		'Deploy to live webserver',
+		'For fun!',
+		String(userCass._id),
+		String(userCass._id),
+		2,
+		['milestone']
 	);
 
-	newTask = await tasks.addTask(
-		'(-__-)',
-		'this description',
-		String(userWes._id),
-		String(userWes._id),
-		1,
-		['tag1', 'tag3']
+	await tasks.addTask(
+		'Submit the project',
+		'Do not forget this!',
+		String(userWill._id),
+		String(userWill._id),
+		3,
+		['milestone']
 	);
-
-	newTask = await tasks.addTask(
-		'(O__o)',
-		'descript',
-		String(userWes._id),
-		String(userWes._id),
-		1,
-		['tag1', 'tag3']
-	);
-
-	await tasks.updateTask(String(newTask._id), {
-		taskName: 'edited name',
-		description: 'Description',
-		createdBy: String(userWes._id),
-		assignedTo: String(userWes._id),
-		status: 0,
-		tags: ['test', 'THISWILLBELOWERCASE']
-	});
-
-	console.log(await tasks.filterTasksByTagsAndName('thiswillbe'));
 
 	console.log('Database initialized.');
 	await db.serverConfig.close();
