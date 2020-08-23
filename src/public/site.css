@@ -126,3 +126,7 @@ textarea {
 #tag_desc {
 	font-size: 9pt;
 }
+
+.badge-primary {
+	background-color: #0072ee;
+}
