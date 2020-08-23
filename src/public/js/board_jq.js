@@ -175,11 +175,9 @@ $('#task_form')
 				window.location.replace('/');
 			},
 			error: function (error) {
-				$('#taskFormError')
-					.show()
-					.html(
-						'Error submitting: check that tags are less than 25 characters long.'
-					);
+				console.log(error);
+				console.log(error.responseJSON.message);
+				$('#taskFormError').show().html(error.responseJSON.message);
 			}
 		});
 	});

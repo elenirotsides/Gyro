@@ -102,7 +102,9 @@ router.post('/create', async (req, res) => {
 	input = req.body;
 
 	if (!input['taskName'].trim() || !input['description'].trim()) {
-		return res.status(400).send({});
+		return res
+			.status(400)
+			.json({ message: `ERROR: no task name or description passed` });
 	}
 
 	tags = input['tags'].trim().split(',');
@@ -117,7 +119,7 @@ router.post('/create', async (req, res) => {
 			tags
 		);
 	} catch (e) {
-		res.status(400).send({});
+		res.status(400).send(e);
 		throw e;
 	}
 	res.redirect('/board');
@@ -138,16 +140,16 @@ router.post('/:id/edit', async (req, res) => {
 			assignedTo: assigned_to
 		});
 	} catch (e) {
-		res.status(400).send({});
+		res.status(400).send(e);
 		throw e;
 	}
 
-	return res.status(200).send({});
+	return res.status(200).send(e);
 });
 
 router.post('/:id/delete', async (req, res) => {
 	if (!req.params.id) {
-		return res.status(400).send({});
+		return res.status(400).json({ message: `ERROR: no task ID passed` });
 	}
 
 	try {
@@ -171,7 +173,7 @@ router.post('/:id/drag', async (req, res) => {
 	try {
 		await tasks.updateTask(id, { status: Number(stage) });
 	} catch (e) {
-		res.status(400).send();
+		res.status(400).send(e);
 		throw e;
 	}
 
@@ -183,13 +185,15 @@ router.post('/:id/comments/create', async (req, res) => {
 	let comment = req.body['comment'].trim();
 
 	if (!comment) {
-		return res.status(400).send({});
+		return res
+			.status(400)
+			.send('ERROR: you must provide a comment to create');
 	}
 
 	try {
 		await tasks.addComment(id, String(req.session.user._id), comment);
 	} catch (e) {
-		res.status(400).send({});
+		res.status(400).send(e);
 		throw e;
 	}
 

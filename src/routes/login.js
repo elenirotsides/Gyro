@@ -14,10 +14,18 @@ router.post('/', async (req, res) => {
 
 	let user;
 
+	if (!input['email'] || !input['email'].trim()) {
+		return res.status(400).render('../src/views/login/index', {
+			hasErrors: true,
+			hideLogout: true,
+			error: 'You must provide an email and password'
+		});
+	}
+
 	try {
 		user = await users.getUserByEmail(input['email'].toLowerCase());
 	} catch (e) {
-		res.render('../src/views/login/index', {
+		return res.status(401).render('../src/views/login/index', {
 			hasErrors: true,
 			hideLogout: true,
 			error:
@@ -35,7 +43,7 @@ router.post('/', async (req, res) => {
 				user.hashedPassword
 			);
 		} catch (e) {
-			res.render('../src/views/login/index', {
+			return res.status(401).render('../src/views/login/index', {
 				hasErrors: true,
 				hideLogout: true,
 				error:
