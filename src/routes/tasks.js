@@ -104,10 +104,18 @@ router.post('/create', async (req, res) => {
 	if (!input['taskName'].trim() || !input['description'].trim()) {
 		return res
 			.status(400)
-			.json({ message: `ERROR: no task name or description passed` });
+			.json({ message: `You must have a task name and description` });
 	}
 
 	tags = input['tags'].trim().split(',');
+
+	for (let i = 0; i < tags.length; i++) {
+		if (tags[i].length > 25) {
+			return res
+				.status(400)
+				.json({ message: `Tags must be less than 25 characters` });
+		}
+	}
 
 	try {
 		await tasks.addTask(
