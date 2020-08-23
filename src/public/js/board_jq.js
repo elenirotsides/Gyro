@@ -72,7 +72,9 @@ $('.edit_task')
 				console.log('Error: ' + error);
 			}
 		};
-		$.ajax(requestConfig);
+		$.ajax(requestConfig).catch(function (error) {
+			console.log('error: ' + JSON.stringify(responseMessage));
+		});
 	});
 
 $('.delete_task')

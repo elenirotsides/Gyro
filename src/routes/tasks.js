@@ -140,6 +140,14 @@ router.post('/:id/edit', async (req, res) => {
 	let description = req.body['description'];
 	let assigned_to = req.body['assigned_to'];
 
+	for (let i = 0; i < tags.length; i++) {
+		if (tags[i].length > 25) {
+			return res
+				.status(400)
+				.json({ message: `Tags must be less than 25 characters` });
+		}
+	}
+
 	try {
 		await tasks.updateTask(id, {
 			taskName: name,
@@ -148,11 +156,10 @@ router.post('/:id/edit', async (req, res) => {
 			assignedTo: assigned_to
 		});
 	} catch (e) {
-		res.status(400).send(e);
-		throw e;
+		return res.status(400).json({ message: `${e}` });
 	}
 
-	return res.status(200).send(e);
+	return res.status(200).redirect('/');
 });
 
 router.post('/:id/delete', async (req, res) => {
