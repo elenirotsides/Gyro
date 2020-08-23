@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const users = require('../datalayer/users');
+const verify = require('../util/verify');
 
 router.get('/', async (req, res) => {
 	res.render('../src/views/login/register', {
@@ -28,6 +29,29 @@ router.post('/', async (req, res) => {
 			hideLogout: true,
 			hasErrors: true,
 			error: 'Uh oh! No blank inputs allowed, please try again.'
+		});
+	}
+
+	try {
+		verify.alphaStr(input['firstName']);
+		verify.alphaStr(input['lastName']);
+	} catch {
+		return res.status(400).render('../src/views/login/register', {
+			title: 'Error',
+			hideLogout: true,
+			hasErrors: true,
+			error: 'First and Last names must consist only of letters'
+		});
+	}
+
+	try {
+		verify.email(input['email']);
+	} catch {
+		return res.status(400).render('../src/views/login/register', {
+			title: 'Error',
+			hideLogout: true,
+			hasErrors: true,
+			error: 'Invalid email address'
 		});
 	}
 
