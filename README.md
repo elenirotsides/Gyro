@@ -7,6 +7,8 @@ Gyro is a workflow management tool that can be used for individual purposes, or 
 
 ## Setting up your enviornment
 
+In your terminal:
+
 1. Clone the package
    `git clone https://github.com/elenirotsides/Gyro.git`
 
@@ -18,6 +20,9 @@ Gyro is a workflow management tool that can be used for individual purposes, or 
 
 4. Run the local server
    `npm start`
+
+5. Navigate to the application  
+   `http://localhost:3000`
 
 ## Logging into Gyro
 
