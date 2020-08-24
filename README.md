@@ -70,7 +70,7 @@ Gyro is a workflow management tool that can be used for individual purposes, or 
 
 5. Change the user assigned to the task by selecting the dropdown - all users with accounts will populate in the dropdown
 
-6. Click `sumbit` to save your changes
+6. Click `submit` to save your changes
 
 ## Deleting a Task
 
