@@ -21,7 +21,7 @@ In your terminal:
 4. Run the local server
    `npm start`
 
-5. Navigate to the application  
+5. Navigate to the application
    `http://localhost:3000`
 
 ## Logging into Gyro
