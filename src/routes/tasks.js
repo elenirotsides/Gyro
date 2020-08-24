@@ -148,43 +148,28 @@ router.post('/:id/edit', async (req, res) => {
 	let description = req.body['description'];
 	let assigned_to = req.body['assigned_to'];
 
-	let getTaskbyID;
+	tagsArray = tags.trim().split(',');
+	tagsArrayLowerCase = [];
 
-	try {
-		getTaskbyID = await tasks.getTask(id);
-	} catch {
-		//should never hit this point
-		return res.status(400).json({
-			message: `Whoops, something went wrong, please try again!`
-		});
+	for (let i = 0; i < tagsArray.length; i++) {
+		tagsArrayLowerCase.push(tagsArray[i].toLowerCase());
 	}
 
-	existingTags = getTaskbyID.tags;
+	//filtering out duplicates
+	let uniqueTags = [...new Set(tagsArrayLowerCase)];
 
-	tags = tags.trim().split(',');
-
-	for (let i = 0; i < tags.length; i++) {
-		if (tags[i].length > 25) {
+	for (let i = 0; i < uniqueTags.length; i++) {
+		if (uniqueTags[i].length > 25) {
 			return res
 				.status(400)
 				.json({ message: `Tags must be less than 25 characters` });
-		}
-		if (existingTags[i].includes(tags[i])) {
-			/*
-			takes care of duplicate issue 
-			if a user tries to enter a tag in all caps but that tag already exists,
-			if allows the tag to be entered even though it shouldn't
-			*/
-			return res
-				.status(400)
-				.json({ message: `Duplicate tags are not allowed` });
 		}
 	}
 
 	try {
 		await tasks.updateTask(id, {
 			taskName: name,
-			tags: tags,
+			tags: uniqueTags,
 			description: description,
 			assignedTo: assigned_to
 		});
