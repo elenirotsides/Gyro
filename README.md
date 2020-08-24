@@ -3,6 +3,7 @@
 # Gyro
 
 CS 546 Final Project
+Gyro is a workflow management tool that can be used for individual purposes, or group projects
 
 ## Setting up your enviornment
 
@@ -81,7 +82,7 @@ CS 546 Final Project
 
     - This can be used to search for task names or tags
 
-2. Select `clear` to remove the filter
+2. Select `clear filter` to remove the filter
 
 ## Logging Out
 
