@@ -2,7 +2,7 @@
 
 # Gyro
 
-CS 546 Web Programming I - Final Project
+CS 546 Web Programming I - Final Project  
 Gyro is a workflow management tool that can be used for individual purposes, or group projects
 
 ## Setting up your enviornment
