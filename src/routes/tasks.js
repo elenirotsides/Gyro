@@ -110,10 +110,10 @@ router.post('/create', async (req, res) => {
 	tags = input['tags'].trim().split(',');
 
 	for (let i = 0; i < tags.length; i++) {
-		if (tags[i].length > 25) {
+		if (tags[i].length > 23) {
 			return res
 				.status(400)
-				.json({ message: `Tags must be less than 25 characters` });
+				.json({ message: `Tags must be less than 24 characters!` });
 		}
 	}
 

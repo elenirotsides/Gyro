@@ -46,8 +46,8 @@ const tags = (x) => {
 	arr(x);
 	x.map((tag) => {
 		str(tag);
-		if (tag.length > 24) {
-			throw new Error('Tags must be less than or equal to 24 in length!');
+		if (tag.length > 23) {
+			throw new Error('Tags must be less than 24 characters!');
 		}
 	});
 };
