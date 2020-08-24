@@ -107,10 +107,18 @@ router.post('/create', async (req, res) => {
 			.json({ message: `You must have a task name and description` });
 	}
 
-	tags = input['tags'].trim().split(',');
+	tagsArray = input['tags'].trim().split(',');
+	tagsArrayLowerCase = [];
 
-	for (let i = 0; i < tags.length; i++) {
-		if (tags[i].length > 23) {
+	for (let i = 0; i < tagsArray.length; i++) {
+		tagsArrayLowerCase.push(tagsArray[i].toLowerCase());
+	}
+
+	//filtering out duplicates
+	let uniqueTags = [...new Set(tagsArrayLowerCase)];
+
+	for (let i = 0; i < uniqueTags.length; i++) {
+		if (uniqueTags[i].length > 23) {
 			return res
 				.status(400)
 				.json({ message: `Tags must be less than 24 characters!` });
@@ -124,7 +132,7 @@ router.post('/create', async (req, res) => {
 			req.session.user._id,
 			input['assigned_to'],
 			0,
-			tags
+			uniqueTags
 		);
 	} catch (e) {
 		res.status(400).send(e);
@@ -140,18 +148,43 @@ router.post('/:id/edit', async (req, res) => {
 	let description = req.body['description'];
 	let assigned_to = req.body['assigned_to'];
 
+	let getTaskbyID;
+
+	try {
+		getTaskbyID = await tasks.getTask(id);
+	} catch {
+		//should never hit this point
+		return res.status(400).json({
+			message: `Whoops, something went wrong, please try again!`
+		});
+	}
+
+	existingTags = getTaskbyID.tags;
+
+	tags = tags.trim().split(',');
+
 	for (let i = 0; i < tags.length; i++) {
 		if (tags[i].length > 25) {
 			return res
 				.status(400)
 				.json({ message: `Tags must be less than 25 characters` });
 		}
+		if (existingTags[i].includes(tags[i])) {
+			/*
+			takes care of duplicate issue 
+			if a user tries to enter a tag in all caps but that tag already exists,
+			if allows the tag to be entered even though it shouldn't
+			*/
+			return res
+				.status(400)
+				.json({ message: `Duplicate tags are not allowed` });
+		}
 	}
 
 	try {
 		await tasks.updateTask(id, {
 			taskName: name,
-			tags: tags.split(',').map((s) => s.trim()),
+			tags: tags,
 			description: description,
 			assignedTo: assigned_to
 		});
