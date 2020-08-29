@@ -1,4 +1,4 @@
-<img src="https://img.icons8.com/all/500/gyroscope.png" width="128">
+<img src="/src/public/logo.png" width="128">
 
 # Gyro
 
